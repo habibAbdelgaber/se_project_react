@@ -1,0 +1,100 @@
+.card__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.card__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--bg-color);
+  /* border-radius: 1.9rem; */ /* according to the design */
+  border-radius: 0.4rem; /* looks better */
+  overflow: hidden;
+  height: 32.6rem;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.card__title {
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: #00000099;
+  padding: 0.2rem 1.2rem;
+  /* border-radius: 0.8rem; according to the design */
+  border-radius: 0.2rem; /* looks much better */
+  margin-bottom: 1.2rem;
+  text-align: center;
+  position: absolute;
+  margin: 1.5rem 0 0;
+  z-index: 1;
+}
+
+.card__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  object-fit: cover;
+  /* border-radius: 1.6rem 1.6rem 0 0;  */ /* according to the design*/
+  border-radius: 1.6rem 1.6rem 0 0; /* looks much better */
+  transition: transform 0.3s ease, border-radius 0.3s ease;
+}
+.card__img:hover {
+  transform: scale(1.05);
+  border-radius: 1.6rem;
+  transition: transform 0.3s ease;
+}
+
+.card__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 0 0 3.2rem 3.2rem;
+}
+
+.card__caption-text {
+  font-family: 'CabinetGrotesk', sans-serif;
+  font-weight: 700;
+  color: var(--secondary-color);
+  font-size: 2rem;
+  line-height: 2.4rem;
+}
+
+.card__caption-weather {
+  font-family: 'CabinetGrotesk', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 2.4rem;
+}
+
+@media (max-width: 1200px) {
+  .card__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .card__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .card__list {
+    grid-template-columns: 1fr;
+  }
+
+  .card__item {
+    aspect-ratio: 1 / 2;
+  }
+}

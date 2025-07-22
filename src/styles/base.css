@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+  color: var(--text-color);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 62.5%;
+}

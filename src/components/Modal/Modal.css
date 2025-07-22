@@ -1,0 +1,85 @@
+/* Prevent background scroll when modal is open */
+.modal_opened {
+  overflow: hidden;
+}
+
+/* Overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.modal_opened.modal {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal content */
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  background: var(--bg-color);
+  position: relative;
+  border-radius: 1.6rem;
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+/* Close button */
+.modal__close-button {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: var(--primary-font-size);
+  cursor: pointer;
+  line-height: 1;
+  z-index: 1001;
+}
+
+.modal__close-icon {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+}
+
+.modal__content_size_small {
+  max-width: 49.8rem;
+  width: clamp(20rem, 50vw, 30rem);
+}
+
+.modal__content_size_medium {
+  max-width: 49.6rem;
+  width: clamp(30rem, 75vw, 40rem);
+}
+
+.modal__content_size_large {
+  width: clamp(50rem, 90vw, 80rem);
+}
+
+/* Optional: slide-up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

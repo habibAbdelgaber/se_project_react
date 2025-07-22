@@ -1,9 +1,14 @@
-# WTWR (What to Wear?)
+# WTWR (What To Wear)
 
-## About the project
+WTWR (What To Wear) is a simple yet practical single-page weather application built with React **_(Vite)_**. It displays the current weather conditions in Fahrenheit, along with suggestions for clothing that is suitable for the weather.
 
-The idea of the application is pretty simple - we make a call to an API, which then responds with the daily weather forecast. We collect the weather data, process it, and then based on the forecast, we recommend suitable clothing to the user.
+The application is designed to be user-friendly and responsive, ensuring a smooth experience across most common small-screen devices.
 
-## Links
+Future enhancements will include features such as likes, comments, and additional interactive functionality to enrich the user experience.
 
-- [Figma Design](https://www.figma.com/file/DTojSwldenF9UPKQZd6RRb/Sprint-10%3A-WTWR)
+## Hard skills (technologies)
+
+- HTML5
+- CSS3
+- Javascript
+- Reactjsx (Javascript library)

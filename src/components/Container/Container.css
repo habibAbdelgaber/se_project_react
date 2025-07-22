@@ -1,0 +1,15 @@
+.container {
+  margin-inline: 4rem;
+}
+
+@media screen and (min-width: 120rem) {
+  .container {
+    margin-inline: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin-inline: 2rem;
+  }
+}
