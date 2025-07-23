@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import ModalForm from '../ModalForm/ModalForm';
-import InputField from '../InputField/InputField';
+import { useState } from "react";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import InputField from "../InputField/InputField";
 
 // import './ClothingForm.css';
 
 function ClothingForm({ isOpen, onClose }) {
   const [values, setValues] = useState({
-    name: '',
-    image: '',
+    name: "",
+    image: "",
     weather: [],
   });
 
@@ -19,18 +19,18 @@ function ClothingForm({ isOpen, onClose }) {
   const validateField = (fieldName, fieldValue) => {
     let error;
     switch (fieldName) {
-      case 'name':
+      case "name":
         if (!fieldValue) {
-          error = 'Name must be set';
+          error = "Name must be set";
         } else if (fieldValue.length < 3) {
-          error = 'Name must be at least 3 characters';
+          error = "Name must be at least 3 characters";
         }
         break;
-      case 'image':
+      case "image":
         if (!fieldValue) {
-          error = 'Image URL is required';
+          error = "Image URL is required";
         } else if (!/^https?:\/\/.+/.test(fieldValue)) {
-          error = 'Invalid URL format';
+          error = "Invalid URL format";
         }
         break;
       default:
@@ -41,7 +41,7 @@ function ClothingForm({ isOpen, onClose }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    if (type === 'checkbox') {
+    if (type === "checkbox") {
       setValues((prev) => ({
         ...prev,
         [name]: checked
@@ -99,8 +99,8 @@ function ClothingForm({ isOpen, onClose }) {
 
   const reset = () => {
     setValues({
-      name: '',
-      image: '',
+      name: "",
+      image: "",
       weather: [],
     });
     setErrors({});
@@ -111,7 +111,7 @@ function ClothingForm({ isOpen, onClose }) {
     !Object.values(errors).some(Boolean) && name && image && weather.length > 0;
 
   return (
-    <ModalForm
+    <ModalWithForm
       isOpen={isOpen}
       onClose={() => {
         reset();
@@ -154,7 +154,7 @@ function ClothingForm({ isOpen, onClose }) {
         error={touched.image && errors.image}
       />
 
-      {['hot', 'cold', 'windy'].map((type) => (
+      {["hot", "cold", "windy"].map((type) => (
         <InputField
           key={type}
           label={type}
@@ -168,7 +168,7 @@ function ClothingForm({ isOpen, onClose }) {
           onBlur={handleBlur}
         />
       ))}
-    </ModalForm>
+    </ModalWithForm>
   );
 }
 

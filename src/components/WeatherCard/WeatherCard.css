@@ -14,7 +14,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(30%, -30%);
+  transform: translate(31%, -35%);
   transition: transform 0.3s ease;
 }
 .weather__text {

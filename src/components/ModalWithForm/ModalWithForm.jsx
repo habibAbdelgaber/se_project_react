@@ -1,6 +1,6 @@
-import Modal from '../Modal/Modal';
+import Modal from "../Modal/Modal";
 
-import './ModalForm.css';
+import "./ModalWithForm.css";
 
 function ModalForm({
   isOpen,
@@ -10,8 +10,8 @@ function ModalForm({
   title,
   onSubmit,
   disabled = false,
-  size = 'medium',
-  buttonText = 'Submit',
+  size = "medium",
+  buttonText = "Submit",
   ...props
 }) {
   return (

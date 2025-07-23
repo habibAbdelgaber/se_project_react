@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import Layout from './Layout/Layout';
-import Weather from './Weather/Weather';
-import Home from './Home/Home';
-import ClothingForm from './ClothingForm/ClothingForm';
+import { useState } from "react";
+import Layout from "./Layout/Layout";
+import WeatherCard from "./WeatherCard/WeatherCard";
+import Home from "./Home/Home";
+import ClothingForm from "./ClothingForm/ClothingForm";
 
 function App() {
   const [formOpen, setFormOpen] = useState(false);
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <Layout onOpen={openform}>
-        <Weather />
+        <WeatherCard />
         <Home />
       </Layout>
       <ClothingForm isOpen={formOpen} onClose={closeForm} />

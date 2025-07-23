@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { API_KEY, LATITUDE, LONGITUDE } from '../../utils/constants';
-import api from '../../utils/api';
-import CardList from '../CardList/CardList';
-import { extractWeatherData } from '../../utils/weather';
-import './Home.css';
+import { useState, useEffect } from "react";
+import { API_KEY, LATITUDE, LONGITUDE } from "../../utils/constants";
+import api from "../../utils/api";
+import ItemCard from "../ItemCard/ItemCard";
+import { extractWeatherData } from "../../utils/weather";
+import "./Home.css";
 
 function Home() {
   const [weather, setWeather] = useState(null);
@@ -13,11 +13,11 @@ function Home() {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const data = await api.get('weather', {
+        const data = await api.get("weather", {
           params: {
             lat: LATITUDE,
             lon: LONGITUDE,
-            units: 'imperial',
+            units: "imperial",
             appid: API_KEY,
           },
         });
@@ -43,7 +43,7 @@ function Home() {
         Today is {Math.round(weather.temperature)}°F / in {weather.city} You may
         want to wear:
       </h2>
-      <CardList temperature={weather.temperature} />
+      <ItemCard temperature={weather.temperature} />
     </div>
   );
 }

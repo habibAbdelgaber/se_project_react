@@ -7,7 +7,7 @@ import {
 } from "../../utils/constants";
 import { weatherColors } from "../../utils/weatherColors";
 import api from "../../utils/api";
-import "./Weather.css";
+import "./WeatherCard.css";
 
 function getTimeOfDay(currentTime, sunrise, sunset) {
   return currentTime >= sunrise && currentTime < sunset ? "day" : "night";

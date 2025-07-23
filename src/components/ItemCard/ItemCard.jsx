@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import Card from '../Card/Card';
-import Modal from '../Modal/Modal';
-import { defaultClothingItems } from '../../utils/defaultClothingItems';
-import getTemperatureRenage from '../../utils/weather';
-import './CardList.css';
+import { useState, useEffect } from "react";
+import Card from "../Card/Card";
+import Modal from "../Modal/Modal";
+import { defaultClothingItems } from "../../utils/defaultClothingItems";
+import getTemperatureRenage from "../../utils/weather";
+import "./ItemCard.css";
 
 function CardList({ temperature }) {
   const [isOpen, setIsOpen] = useState(false);
