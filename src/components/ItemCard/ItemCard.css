@@ -55,28 +55,6 @@
   transition: transform 0.3s ease;
 }
 
-.card__caption {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  padding: 0 0 3.2rem 3.2rem;
-}
-
-.card__caption-text {
-  font-family: 'CabinetGrotesk', sans-serif;
-  font-weight: 700;
-  color: var(--secondary-color);
-  font-size: 2rem;
-  line-height: 2.4rem;
-}
-
-.card__caption-weather {
-  font-family: 'CabinetGrotesk', sans-serif;
-  font-weight: 700;
-  font-size: 2rem;
-  line-height: 2.4rem;
-}
-
 @media (max-width: 1200px) {
   .card__list {
     grid-template-columns: repeat(3, 1fr);

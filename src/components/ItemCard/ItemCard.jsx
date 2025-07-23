@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Card from "../Card/Card";
-import Modal from "../Modal/Modal";
+import ItemModal from "../ItemModal/ItemModal";
 import { defaultClothingItems } from "../../utils/defaultClothingItems";
 import getTemperatureRenage from "../../utils/weather";
 import "./ItemCard.css";
@@ -51,18 +51,11 @@ function CardList({ temperature }) {
       </Card>
 
       {isOpen && selectedCard && (
-        <Modal
+        <ItemModal
           isOpen={isOpen}
           onClose={handleClose}
-          size="small"
-          name="Card Details"
-        >
-          <img src={link} alt={name} className="card__img" />
-          <div className="card__caption">
-            <h3 className="card__caption-text">{name}</h3>
-            <p className="card__caption-weather">Weather: {weather}</p>
-          </div>
-        </Modal>
+          item={{ name, link, weather }}
+        />
       )}
     </>
   );
