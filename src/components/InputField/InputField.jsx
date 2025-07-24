@@ -21,8 +21,29 @@ function InputField({
 
   if (type === "checkbox") {
     return (
-      <div className="form__group form__group-checkbox">
-        <label className="form__label form__label-checkbox">
+      <div
+        className={`form__group form__group-checkbox ${
+          checked ? "active" : ""
+        }`}
+        role="radio"
+        aria-checked={checked}
+        aria-label={label}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onChange({
+              target: {
+                name,
+                type: "checkbox",
+                value,
+                checked: !checked,
+              },
+            });
+          }
+        }}
+      >
+        <label className="form__label form__label-checkbox" htmlFor={id}>
           <input
             className={`form__input form__input-checkbox ${
               hasError ? "form__input-error" : ""

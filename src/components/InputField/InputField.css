@@ -3,45 +3,6 @@
   flex-direction: column;
   gap: 0.8rem;
 }
-.form__group-checkbox {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.form__input-checkbox {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.form__checkbox-custom {
-  position: relative;
-  display: inline-block;
-  width: 2rem;
-  height: 2rem;
-  border: 0.2rem solid var(--text-color);
-  border-radius: 50%;
-  box-sizing: border-box;
-  margin-right: 0.5rem;
-  transition: border-color 0.2s ease;
-}
-
-.form__input-checkbox:checked + .form__checkbox-custom::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1.2rem;
-  height: 1.2rem;
-  background-color: var(--text-color);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-.form__input-checkbox:focus + .form__checkbox-custom {
-  border-color: var(--accent-color);
-}
 
 .form__label {
   display: block;
@@ -63,7 +24,64 @@
 }
 
 .form__input-checkbox {
-  display: block;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.form__group-checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  transition: background-color 0.3s ease;
+}
+
+.form__group-checkbox:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.form__group-checkbox.active {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.form__group-checkbox:focus-within {
+  outline: 0.2rem solid rgba(0, 0, 0, 0.04);
+  outline-offset: 0.1rem;
+}
+
+.form__checkbox-custom {
+  position: relative;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 0.2rem solid var(--text-color);
+  border-radius: 50%;
+  box-sizing: border-box;
+  margin-right: 0.5rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form__input-checkbox:checked + .form__checkbox-custom::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: var(--text-color);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .form__input {

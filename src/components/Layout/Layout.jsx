@@ -5,12 +5,12 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import "./Layout.css";
 
-function Layout({ children, onOpen }) {
+function Layout({ children, onOpen, currentCity }) {
   return (
     <Page>
       <div className="layout">
         <Container>
-          <Navbar onAddClothes={onOpen} />
+          <Navbar onAddClothes={onOpen} currentCity={currentCity} />
           <Main>{children}</Main>
           <Footer />
         </Container>

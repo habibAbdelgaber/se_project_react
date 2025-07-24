@@ -1,5 +1,5 @@
 // temperature range helpers
-export function getTemperatureRange(temp) {
+export default function getTemperatureRange(temp) {
   if (temp >= 95) return "very hot";
   if (temp >= 86) return "hot";
   if (temp >= 66) return "warm";
@@ -7,31 +7,28 @@ export function getTemperatureRange(temp) {
   return "cold";
 }
 
-export function extractWeatherData(apiResponse) {
-  if (
-    !apiResponse ||
-    !apiResponse.main ||
-    typeof apiResponse.main.temp !== "number"
-  ) {
-    console.warn("extractWeatherData: Unexpected API format", apiResponse);
-    return {
-      city: "Unknown",
-      temperature: 0,
-      weatherType: "unknown",
-    };
-  }
+export function extractWeatherData(data) {
+  const {
+    name: city,
+    main: { temp },
+    weather: weatherArray,
+    sys,
+  } = data;
 
-  const city =
-    apiResponse.name && apiResponse.name.trim() !== ""
-      ? apiResponse.name
-      : "Unknown";
-  const temperature = apiResponse.main.temp;
-  const weatherType = getTemperatureRange(temperature);
+  const condition = weatherArray[0].main;
+  const description = weatherArray[0].description;
+  const icon = weatherArray[0].icon;
 
   return {
+    // For Home
+    temperature: temp,
     city,
-    temperature,
-    weatherType,
+
+    // For WeatherCard
+    condition,
+    description,
+    icon,
+    sys, // sunrise and sunset
+    full: data, // optional: in case you need more raw data in future
   };
 }
-export default getTemperatureRange;

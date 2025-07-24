@@ -37,9 +37,9 @@ function CardList({ temperature }) {
     <>
       <Card>
         <ul className="card__list">
-          {items.map((card, index) => (
+          {items.map((card) => (
             <li
-              key={index}
+              key={card._id}
               className="card__item"
               onClick={() => handleOpen(card)}
             >

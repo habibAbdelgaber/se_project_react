@@ -2,7 +2,7 @@ import Modal from "../Modal/Modal";
 
 import "./ModalWithForm.css";
 
-function ModalForm({
+function ModalWithForm({
   isOpen,
   onClose,
   children,
@@ -31,4 +31,4 @@ function ModalForm({
   );
 }
 
-export default ModalForm;
+export default ModalWithForm;

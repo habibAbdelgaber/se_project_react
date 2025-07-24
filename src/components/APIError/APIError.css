@@ -1,0 +1,39 @@
+.api-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+  text-align: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.api-error__message {
+  margin: 0;
+  font-size: var(--primary-font-size);
+  font-family: var(--font-family);
+  font-weight: 500;
+  color: var(--accent-error-color);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
