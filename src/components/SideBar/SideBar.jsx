@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { getImage } from "../../utils/imageMap";
-import "./Sidebar.css";
+import "./SideBar.css";
 
 function SideBar() {
   const userAvatar = getImage("Avatar On");
