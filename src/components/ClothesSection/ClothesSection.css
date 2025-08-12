@@ -1,13 +1,16 @@
-.card__list {
+.clothes-section {
+  margin: 0;
+}
+.clothes-section__list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding: 0;
   margin: 0 auto;
 }
 
-.card__item {
+.clothes-section__item {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -22,17 +25,16 @@
   position: relative;
 }
 
-.card__title {
+.clothes-section__title {
   background-color: var(--bg-color);
   font-family: var(--font-family);
-  font-family: var(--secondary-font-family);
   font-weight: 700;
   font-size: 1.6rem;
   line-height: 2rem;
   color: #00000099;
   padding: 0.2rem 1.2rem;
   /* border-radius: 0.8rem; according to the design */
-  border-radius: 0.4rem; /* but this looks much better */
+  border-radius: 0.2rem; /* but this looks much better */
   margin-bottom: 1.2rem;
   text-align: center;
   position: absolute;
@@ -40,36 +42,41 @@
   z-index: 1;
 }
 
-.card__img {
+.clothes-section__img {
   display: block;
   width: 100%;
   height: 100%;
   flex-grow: 1;
   object-fit: cover;
   /* border-radius: 1.6rem 1.6rem 0 0;  */ /* according to the design*/
-  border-radius: 0.4rem 0.4rem 0 0; /* but this looks much better */
-  transition: transform 0.3s ease, border-radius 0.3s ease;
+  border-radius: 0.4rem 0.4rem 0 0; /* looks much better */
   cursor: pointer;
 }
 
 @media (max-width: 1200px) {
-  .card__list {
+  .clothes-section__list {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 900px) {
-  .card__list {
-    grid-template-columns: repeat(2, 1fr);
+/* @media (max-width: 900px) {
+  .clothes-section__list {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
-}
+} */
 
-@media (max-width: 600px) {
-  .card__list {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .clothes-section {
+    width: 100%;
+  }
+  .clothes-section__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
   }
 
-  .card__item {
+  .clothes-section__item {
     aspect-ratio: 1 / 2;
+    width: 100%;
   }
 }

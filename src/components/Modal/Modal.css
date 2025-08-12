@@ -61,6 +61,7 @@
 .modal__content_size_small {
   max-width: 49.8rem;
   width: clamp(20rem, 50vw, 30rem);
+  border-radius: 0.4rem;
 }
 
 .modal__content_size_medium {

@@ -1,5 +1,5 @@
-.home__text {
-  font-family: var(--font-family), sans-serif;
+.home__title {
+  font-family: var(--secondary-font-family);
   font-weight: 700;
   font-size: var(--primary-font-size);
   line-height: 100%;

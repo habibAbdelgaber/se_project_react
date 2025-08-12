@@ -1,30 +1,32 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import InputField from "../InputField/InputField";
-import useFormValidation from "../../hooks/useFormValidation";
-
-function ClothingForm({ isOpen, onClose }) {
+import useForm from "../../hooks/useForm";
+function AddItemModal({ isOpen, onAddItem, onClose }) {
   const {
     values,
     errors,
     touched,
-    isValid,
+    handleSubmit,
     handleChange,
     handleBlur,
     handleFocus,
     reset,
-  } = useFormValidation({
-    name: "",
-    image: "",
-    weather: [],
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!isValid) return;
-    console.log(values);
+  } = useForm({ name: "", imageUrl: "", weather: [] }, (vals) => {
+    onAddItem({
+      name: vals.name.trim(),
+      imageUrl: vals.imageUrl.trim(),
+      weather: vals.weather,
+    });
     reset();
     onClose();
-  };
+  });
+  const hasBasics =
+    values.name.trim() &&
+    values.imageUrl.trim() &&
+    Array.isArray(values.weather) &&
+    values.weather.length === 1;
+
+  const isFormValid = hasBasics && Object.keys(errors).length === 0;
 
   return (
     <ModalWithForm
@@ -34,11 +36,11 @@ function ClothingForm({ isOpen, onClose }) {
         onClose();
       }}
       onSubmit={handleSubmit}
-      title="New garment"
-      name="clothing-form"
+      title="Add item"
+      name="item-form"
       size="medium"
-      disabled={!isValid}
-      buttonText="Add garment"
+      disabled={!isFormValid}
+      buttonText="Add item"
     >
       <InputField
         label="Name"
@@ -56,21 +58,20 @@ function ClothingForm({ isOpen, onClose }) {
         error={touched.name && errors.name}
       />
       <InputField
-        label="Image"
-        id="image"
-        name="image"
+        label="ImageUrl"
+        id="imageUrl"
+        name="imageUrl"
         type="url"
-        value={values.image}
-        placeholder="https://example.com/image.jpg"
-        pattern="https?://.+"
+        value={values.imageUrl}
+        placeholder="https://example.com/imageUrl.jpg"
         required
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        error={touched.image && errors.image}
+        error={touched.imageUrl && errors.imageUrl}
       />
 
-      {["hot", "cold", "windy"].map((type) => (
+      {["hot", "cold", "warm"].map((type) => (
         <InputField
           key={type}
           label={type}
@@ -84,8 +85,14 @@ function ClothingForm({ isOpen, onClose }) {
           onBlur={handleBlur}
         />
       ))}
+      {/* Show group error once */}
+      {touched.weather && errors.weather && (
+        <div className="input-error" role="alert">
+          {errors.weather}
+        </div>
+      )}
     </ModalWithForm>
   );
 }
 
-export default ClothingForm;
+export default AddItemModal;

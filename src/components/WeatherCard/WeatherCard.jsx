@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { WEATHER_ICON_URL } from "../../utils/constants";
 import { weatherColors } from "../../utils/weatherColors";
 import "./WeatherCard.css";
@@ -13,7 +14,10 @@ function getBackgroundColor(condition, timeOfDay) {
 export default function WeatherCard({ weather }) {
   if (!weather) return null;
 
-  const { condition, icon, description, temperature, sys } = weather;
+  const unit = useSelector((state) => state.temperatureUnit);
+  const temp = weather.temperature?.[unit];
+
+  const { condition, icon, description, sys } = weather;
 
   const sunrise = sys.sunrise;
   const sunset = sys.sunset;
@@ -26,7 +30,9 @@ export default function WeatherCard({ weather }) {
   return (
     <div className="weather" style={{ backgroundColor }}>
       <img src={iconUrl} alt={description} className="weather__icon" />
-      <h2 className="weather__text">{Math.round(temperature)}°F</h2>
+      <h2 className="weather__text">
+        {temp}°{unit}
+      </h2>
     </div>
   );
 }

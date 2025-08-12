@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { getImage } from '../../utils/imageMap';
-import './Modal.css';
+import { useEffect } from "react";
+import { getImage } from "../../utils/imageMap";
+import "./Modal.css";
 
-function Modal({ children, isOpen, onClose, name, size = 'medium' }) {
-  const closeIcon = getImage('Close Icon');
+function Modal({ isOpen, children, onClose, name, size = "medium" }) {
+  const closeIcon = getImage("Close Icon");
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add('modal_opened');
+      document.body.classList.add("modal_opened");
     }
-    return () => document.body.classList.remove('modal_opened');
+    return () => document.body.classList.remove("modal_opened");
   }, [isOpen]);
 
   const handleOverlayClick = (e) => {
@@ -18,16 +18,16 @@ function Modal({ children, isOpen, onClose, name, size = 'medium' }) {
   };
 
   const handleEscKey = (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       onClose();
     }
   };
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('keydown', handleEscKey);
+      document.addEventListener("keydown", handleEscKey);
     } else {
-      document.removeEventListener('keydown', handleEscKey);
+      document.removeEventListener("keydown", handleEscKey);
     }
   }, [isOpen]);
 
@@ -37,7 +37,7 @@ function Modal({ children, isOpen, onClose, name, size = 'medium' }) {
 
   return (
     <div
-      className={`modal modal_type_${name} ${isOpen ? 'modal_opened' : ''}`}
+      className={`modal ${isOpen ? "modal_opened" : ""} modal_type_${name}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby={name ? `${name}-title` : undefined}

@@ -6,7 +6,8 @@
   --button-disabled: #ccc;
   --accent-color: #00a3ff;
   --accent-error-color: #ff4d00;
-  --font-family: 'CabinetGrotesk';
+  --font-family: "CabinetGrotesk";
+  --secondary-font-family: "Ubuntu";
   --base-font-size: 1.6rem;
   --primary-font-size: 2rem;
 }

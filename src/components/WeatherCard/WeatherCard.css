@@ -17,11 +17,9 @@
   transition: transform 0.3s ease;
 }
 .weather__text {
-  font-family: var(--font-family);
+  font-family: var(--secondary-font-family);
   color: var(--primary-color);
   font-weight: 700;
-  font-style: Bold;
   font-size: 3.6rem;
   line-height: 4rem;
-  vertical-align: middle;
 }

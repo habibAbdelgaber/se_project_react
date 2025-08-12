@@ -1,22 +1,17 @@
 import { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import ItemModal from "../ItemModal/ItemModal";
-import getTemperatureRange from "../../utils/weather";
-import "./ItemCard.css";
+import getTemperatureRenage from "../../utils/weather";
+import "./ClothesSection.css";
 
-function CardList({
-  temperature,
-  onDeleteRequest,
-  closeItemModalTick,
-  clothingItems,
-}) {
+function ClothesSection({ temperature, clothingItems }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentWeather, setCurrentWeather] = useState(null);
 
   useEffect(() => {
     if (temperature !== null && temperature !== undefined) {
-      const temperatureRange = getTemperatureRange(temperature);
+      const temperatureRange = getTemperatureRenage(temperature);
       setCurrentWeather(temperatureRange);
     }
   }, [temperature]);
@@ -25,31 +20,34 @@ function CardList({
     setSelectedCard(card);
     setIsOpen(true);
   };
+
   const handleClose = () => {
     setIsOpen(false);
     setSelectedCard(null);
   };
 
-  const items = (clothingItems ?? []).filter((item) =>
-    currentWeather ? item.weather === currentWeather : true
-  );
+  const { name, weather, imageUrl } = selectedCard || {};
 
-  useEffect(() => {
-    if (isOpen) handleClose();
-  }, [closeItemModalTick]);
+  const items = (clothingItems ?? []).filter(
+    (item) => item.weather === currentWeather
+  );
 
   return (
     <>
-      <Card>
-        <ul className="card__list">
+      <Card className="clothes-section">
+        <ul className="clothes-section__list">
           {items.map((card) => (
             <li
               key={card._id}
-              className="card__item"
+              className="clothes-section__item"
               onClick={() => handleOpen(card)}
             >
-              <h3 className="card__title">{card.name}</h3>
-              <img src={card.imageUrl} alt={card.name} className="card__img" />
+              <h3 className="clothes-section__title">{card.name}</h3>
+              <img
+                src={card.imageUrl}
+                alt={card.name}
+                className="clothes-section__img"
+              />
             </li>
           ))}
         </ul>
@@ -59,17 +57,10 @@ function CardList({
         <ItemModal
           isOpen={isOpen}
           onClose={handleClose}
-          onDeleteRequest={onDeleteRequest}
-          // item={{
-          //   name: selectedCard.name,
-          //   imageUrl: selectedCard.imageUrl,
-          //   weather: selectedCard.weather,
-          // }}
-          item={selectedCard}
+          item={{ name, imageUrl, weather }}
         />
       )}
     </>
   );
 }
-
-export default CardList;
+export default ClothesSection;

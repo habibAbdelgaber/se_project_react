@@ -1,0 +1,69 @@
+.toggle-container {
+  width: 5.6rem;
+  height: 2.8rem;
+  background-color: var(--primary-color);
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  border: #7e7e7e 0.2rem solid;
+  margin: 0.6rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #aaa;
+}
+
+/* F and C hint labels */
+.toggle-label {
+  position: absolute;
+  top: 50%;
+  color: grey;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.toggle-label.left {
+  left: 1rem;
+}
+
+.toggle-label.right {
+  right: 1rem;
+}
+
+/* Thumb */
+.toggle-thumb {
+  width: 2.8rem;
+  height: 2.8rem;
+  background-color: var(--bg-color);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: left 0.3s ease;
+  z-index: 1;
+
+  font-family: "CabinetGrotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 100%;
+  text-align: center;
+}
+
+.toggle-thumb.left {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  left: -0.1rem;
+}
+
+.toggle-thumb.right {
+  left: 2.5rem;
+}

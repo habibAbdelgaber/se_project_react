@@ -1,0 +1,50 @@
+.profile {
+  margin: 6.3rem 0 8rem;
+  display: flex;
+  align-items: flex-start;
+}
+.profile__clothes-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.profile__card {
+  margin: 1.6rem 0;
+  display: flex;
+  gap: 2rem;
+}
+
+.profile__items {
+  display: block;
+  font-family: "CabinetGrotesk", sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 100%;
+  color: var(--secondary-color);
+}
+.profile__add-button {
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  font-family: "CabinetGrotesk", sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 100%;
+}
+.profile__add-icon,
+.profile__add-text {
+  color: #00000099;
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    flex-direction: column;
+    width: 100%;
+  }
+  .profile__sidebar {
+    width: 100%;
+    flex: none;
+  }
+}

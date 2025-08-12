@@ -1,0 +1,60 @@
+.delete-confirmation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 4rem 2rem;
+}
+
+.delete-confirmation__title {
+  font-family: var(--secondary-font-family);
+  font-weight: 700;
+  font-size: var(--primary-font-size);
+  line-height: 2.4rem;
+  text-align: center;
+}
+
+.delete-confirmation__button-group {
+  width: 96%;
+  display: flex;
+  gap: 2rem;
+}
+
+.delete-confirmation__button {
+  display: block;
+  width: 100%;
+  font-family: var(--secondary-font-family);
+  font-weight: 700;
+  font-size: var(--primary-font-size);
+  line-height: 2.4rem;
+  padding: 0.3rem 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.delete-confirmation__button-confirm {
+  background-color: var(--accent-error-color);
+  opacity: 0.9;
+  color: var(--bg-color);
+  transition: opacity 0.3s ease;
+}
+
+.delete-confirmation__button-confirm:hover {
+  background-color: var(--accent-error-color);
+  opacity: 1;
+}
+.delete-confirmation__button-cancel {
+  background-color: #808080;
+  color: var(--bg-color);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.delete-confirmation__button-cancel:hover {
+  opacity: 1;
+}
+@media screen and (max-width: 768px) {
+  .delete-confirmation__button-group {
+    flex-direction: column;
+  }
+}

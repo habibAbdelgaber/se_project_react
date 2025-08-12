@@ -1,91 +1,64 @@
-import { useState } from "react";
+function useFormValidation(values) {
+  const errors = {};
 
-export default function useFormValidation(initialValues) {
-  const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState({});
-  const [touched, setTouched] = useState({});
-
-  const validateField = (name, value) => {
-    switch (name) {
-      case "name":
-        if (!value) return "Name is required";
-        if (value.length < 3) return "Name must be at least 3 characters";
-        return null;
-
-      case "image":
-        if (!value) return "Image URL is required";
-        if (
-          !/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif|svg)$/i.test(value.trim())
-        ) {
-          return "Must be a valid image URL";
-        }
-        return null;
-
-      case "weather":
-        if (!Array.isArray(value) || value.length === 0)
-          return "Please select one weather condition";
-        return null;
-
-      default:
-        return null;
+  // NAME
+  if (typeof values.name === "string") {
+    if (!values.name.trim()) {
+      errors.name = "Name is required";
+    } else if (values.name.trim().length < 3) {
+      errors.name = "Name must be at least 3 characters";
     }
-  };
+  }
 
-  const handleChange = (e) => {
-    const { name, value, type } = e.target;
-
-    if (type === "checkbox") {
-      // Only one checked at a time
-      setValues((prev) => ({
-        ...prev,
-        [name]: [value],
-      }));
+  // IMAGE (URL ending with an image extension OR query params)
+  if (typeof values.imageUrl === "string") {
+    const img = values.imageUrl.trim();
+    if (!img) {
+      errors.imageUrl = "Image URL is required";
     } else {
-      setValues((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-
-      if (touched[name]) {
-        const error = validateField(name, value);
-        setErrors((prev) => ({ ...prev, [name]: error }));
+      const imagePattern =
+        /^https?:\/\/.+(\.(?:jpg|jpeg|png|webp|gif|svg)(?:\?.*)?$|\?.+=.+)$/i;
+      if (!imagePattern.test(img)) {
+        errors.imageUrl = "Must be a valid image URL";
       }
     }
-  };
+  }
 
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-    const error = validateField(name, value);
-    setErrors((prev) => ({ ...prev, [name]: error }));
-  };
+  // WEATHER (array with exactly one choice)
+  if (!Array.isArray(values.weather) || values.weather.length !== 1) {
+    errors.weather = "Please select one weather condition";
+  }
 
-  const handleFocus = (e) => {
-    const { name } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: false }));
-    setErrors((prev) => ({ ...prev, [name]: undefined }));
-  };
+  if (
+    values.email &&
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+  ) {
+    errors.email = "Invalid email address";
+  }
+  if (
+    values.username &&
+    (values.username.length < 3 || values.username.length > 25)
+  ) {
+    errors.username = "Username must be between 3 and 25 characters";
+  }
+  if (
+    values.password &&
+    (values.password.length < 8 || values.password.length > 30)
+  ) {
+    errors.password = "Password must be between 8 and 30 characters";
+  }
+  if (values.confirmPassword && values.confirmPassword !== values.password) {
+    errors.confirmPassword = "Passwords do not match";
+  }
+  if (
+    values.imageFile &&
+    (!values.imageFile.type?.startsWith("image/") ||
+      values.imageFile.size > 2 * 1024 * 1024)
+  ) {
+    errors.imageFile = errors.imageFile || "Invalid image file";
+  }
 
-  const reset = () => {
-    setValues(initialValues);
-    setErrors({});
-    setTouched({});
-  };
-
-  const isValid =
-    !Object.values(errors).some(Boolean) &&
-    Object.entries(values).every(([key, val]) =>
-      Array.isArray(val) ? val.length > 0 : val?.trim()
-    );
-
-  return {
-    values,
-    errors,
-    touched,
-    isValid,
-    handleChange,
-    handleBlur,
-    handleFocus,
-    reset,
-  };
+  return errors;
 }
+
+export default useFormValidation;

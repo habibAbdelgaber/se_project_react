@@ -1,13 +1,18 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import Header from "../Header/Header";
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { getImage } from "../../utils/imageMap";
 import "./Navbar.css";
 
-function Navbar({ onAddClothes, currentCity }) {
+function Navbar({ onAddClothes, currentCity, weatherUnitType }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const wtwr = getImage("WTWR");
   const avatarOn = getImage("Avatar On");
 
+  //Navigation item is active
+  const isActive = ({ isActive }) =>
+    `navbar__link ${isActive ? "navbar__link-active" : ""}`;
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -35,13 +40,16 @@ function Navbar({ onAddClothes, currentCity }) {
             isMenuOpen ? "navbar__list-open" : ""
           }`}
         >
-          <li className="navbar__item">
-            <img src={wtwr.image} alt={wtwr.name} className="navbar__logo" />
+          <li className="navbar__item navbar__item-logo">
+            <NavLink className="navbar__link" to="/">
+              <img src={wtwr.image} alt={wtwr.name} className="navbar__logo" />
+            </NavLink>
             <span className="navbar__weather-text">
               {currentDate}, {currentCity}
             </span>
           </li>
           <li className="navbar__item">
+            <ToggleSwitch />
             <button
               type="button"
               className="navbar__add-button"
@@ -49,7 +57,9 @@ function Navbar({ onAddClothes, currentCity }) {
             >
               + add clothes
             </button>
-            <span className="navbar__username">Terrence Tegegne</span>
+            <NavLink to="/profile" className={isActive}>
+              Terrence Tegegne
+            </NavLink>
           </li>
         </ul>
 

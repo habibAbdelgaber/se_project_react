@@ -1,4 +1,3 @@
-// temperature range helpers
 export default function getTemperatureRange(temp) {
   if (temp >= 95) return "very hot";
   if (temp >= 86) return "hot";
@@ -19,16 +18,19 @@ export function extractWeatherData(data) {
   const description = weatherArray[0].description;
   const icon = weatherArray[0].icon;
 
-  return {
-    // For Home
-    temperature: temp,
-    city,
+  const tempFahrenheit = Math.round(temp);
+  const tempCelsius = Math.round(((temp - 32) * 5) / 9);
 
-    // For WeatherCard
+  return {
+    temperature: {
+      F: tempFahrenheit,
+      C: tempCelsius,
+    },
+    city,
     condition,
     description,
     icon,
-    sys, // sunrise and sunset
-    full: data, // optional: in case you need more raw data in future
+    sys,
+    full: data,
   };
 }

@@ -5,17 +5,31 @@
   flex-grow: 1;
   object-fit: cover;
   /* border-radius: 1.6rem 1.6rem 0 0;  */ /* according to the design*/
-  border-radius: 1.6rem 1.6rem 0 0; /* looks much better */
+  border-radius: 0.4rem 0.4rem 0 0; /* but this looks much better */
   transition: transform 0.3s ease, border-radius 0.3s ease;
 }
-.item__caption {
+.item__content {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  padding: 0 0 3.2rem 3.2rem;
+  padding: 0 3.2rem 3.2rem;
 }
 
-.item__caption-text {
+.item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item__delete-button {
+  display: block;
+  color: var(--accent-error-color);
+  font-family: var(--secondary-font-family);
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+}
+
+.item__title {
   font-family: "CabinetGrotesk", sans-serif;
   font-weight: 700;
   color: var(--secondary-color);

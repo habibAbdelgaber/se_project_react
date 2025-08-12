@@ -13,8 +13,12 @@
     "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
+    "lucide-react": "^0.536.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.7.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

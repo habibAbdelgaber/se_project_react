@@ -1,11 +1,12 @@
-import { BASE_URL } from "./constants";
+import { BASE_URL, API_URL } from "./constants";
 
 // This utility function handles API requests with error handling and response parsing
 const apiFetch = async (
+  base,
   endpoint,
   { method = "GET", body = null, headers = {}, params = {} } = {}
 ) => {
-  let url = `${BASE_URL}${endpoint}`;
+  let url = `${base}${endpoint}`;
 
   // If there are query parameters, append them to the URL
   // This ensures that the URL is properly formatted with '?' or '&'
@@ -41,14 +42,24 @@ const apiFetch = async (
 };
 
 // Exporting the API methods for use in other parts of the application
-export const api = {
-  get: (endpoint, options) => apiFetch(endpoint, { ...options, method: "GET" }),
+export const weatherAPI = {
+  get: (endpoint, options) =>
+    apiFetch(BASE_URL, endpoint, { ...options, method: "GET" }),
   post: (endpoint, body, options) =>
-    apiFetch(endpoint, { ...options, method: "POST", body }),
+    apiFetch(BASE_URL, endpoint, { ...options, method: "POST", body }),
   put: (endpoint, body, options) =>
-    apiFetch(endpoint, { ...options, method: "PUT", body }),
+    apiFetch(BASE_URL, endpoint, { ...options, method: "PUT", body }),
   delete: (endpoint, options) =>
-    apiFetch(endpoint, { ...options, method: "DELETE" }),
+    apiFetch(BASE_URL, endpoint, { ...options, method: "DELETE" }),
 };
 
-export default api;
+export const itemAPI = {
+  get: (endpoint, options) =>
+    apiFetch(API_URL, endpoint, { ...options, method: "GET" }),
+  post: (endpoint, body, options) =>
+    apiFetch(API_URL, endpoint, { ...options, method: "POST", body }),
+  put: (endpoint, body, options) =>
+    apiFetch(API_URL, endpoint, { ...options, method: "PUT", body }),
+  delete: (endpoint, options) =>
+    apiFetch(API_URL, endpoint, { ...options, method: "DELETE" }),
+};

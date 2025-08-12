@@ -16,7 +16,14 @@ function ModalWithForm({
 }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} name={name} size={size} {...props}>
-      <form className="form" onSubmit={onSubmit} noValidate>
+      <form
+        className="form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit?.(e);
+        }}
+        noValidate
+      >
         {title && (
           <h2 id={`${name}-title`} className="form__title">
             {title}
