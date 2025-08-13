@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout/Layout";
-import LandingPage from "./LandingPage/LandingPage";
+import Main from "./Main/Main";
 import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
 import NotFound404 from "./NotFound404/NotFound404";
@@ -142,7 +142,7 @@ function App() {
           <Route
             index
             element={
-              <LandingPage
+              <Main
                 weather={weather}
                 clothingItems={clothingItems}
                 onDeleteRequest={openDeleteCardConformation}

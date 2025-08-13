@@ -1,8 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Page from "../Page/Page";
 import Container from "../Container/Container";
-import Navbar from "../Navbar/Navbar";
-import Main from "../Main/Main";
+import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "./Layout.css";
 
@@ -11,10 +10,10 @@ function Layout({ onOpen, currentCity }) {
     <Page>
       <div className="layout">
         <Container>
-          <Navbar onAddClothes={onOpen} currentCity={currentCity} />
-          <Main>
+          <Header onAddClothes={onOpen} currentCity={currentCity} />
+          <main>
             <Outlet />
-          </Main>
+          </main>
           <Footer />
         </Container>
       </div>

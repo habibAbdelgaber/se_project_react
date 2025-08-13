@@ -1,7 +1,23 @@
-import './Main.css';
+import WeatherCard from "../WeatherCard/WeatherCard";
+import Home from "../Home/Home";
 
-function Main({ children }) {
-  return <main className="main-container">{children}</main>;
+function LandingPage({
+  weather,
+  clothingItems,
+  onDeleteRequest,
+  closeItemModalTick,
+}) {
+  return (
+    <>
+      <WeatherCard weather={weather} />
+      <Home
+        weather={weather}
+        clothingItems={clothingItems}
+        onDeleteRequest={onDeleteRequest}
+        closeItemModalTick={closeItemModalTick}
+      />
+    </>
+  );
 }
 
-export default Main; // This component serves as the main content area of the application.
+export default LandingPage;
