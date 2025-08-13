@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout/Layout";
 import Main from "./Main/Main";
-import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
 import NotFound404 from "./NotFound404/NotFound404";
 import AddItemModal from "./AddItemModal/AddItemModal";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
 import { API_KEY, LATITUDE, LONGITUDE } from "../utils/constants";
-import { defaultClothingItems } from "../utils/defaultClothingItems";
 import { extractWeatherData } from "../utils/weather";
 import { weatherAPI, itemAPI } from "../utils/api";
 
@@ -18,7 +16,7 @@ import APIError from "./APIError/APIError";
 function App() {
   const [formOpen, setFormOpen] = useState(false);
   const [weather, setWeather] = useState(null);
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [closeItemModalTick, setCloseItemModalTick] = useState(0);
@@ -138,7 +136,7 @@ function App() {
             />
           }
         >
-          {/* Landing route: shows WeatherCard + Home */}
+          {/* Main route: shows WeatherCard + main */}
           <Route
             index
             element={
@@ -161,10 +159,6 @@ function App() {
                 clothingItems={clothingItems}
               />
             }
-          />
-          <Route
-            path="home"
-            element={<Home weather={weather} clothingItems={clothingItems} />}
           />
           <Route path="*" element={<NotFound404 />} />
         </Route>
