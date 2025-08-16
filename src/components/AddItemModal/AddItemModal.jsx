@@ -15,7 +15,7 @@ function AddItemModal({ isOpen, onAddItem, onClose }) {
     onAddItem({
       name: vals.name.trim(),
       imageUrl: vals.imageUrl.trim(),
-      weather: vals.weather,
+      weather: vals.weather[0],
     });
     reset();
     onClose();

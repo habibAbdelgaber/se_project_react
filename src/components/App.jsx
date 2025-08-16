@@ -157,6 +157,8 @@ function App() {
                 weather={weather}
                 isOpen={() => setFormOpen(true)}
                 clothingItems={clothingItems}
+                onDeleteRequest={openDeleteCardConformation}
+                closeItemModalTick={closeItemModalTick}
               />
             }
           />

@@ -4,7 +4,7 @@ import ClothesSection from "../ClothesSection/ClothesSection";
 import SideBar from "../Sidebar/Sidebar";
 import "./Profile.css";
 
-function Profile({ weather, isOpen, clothingItems }) {
+function Profile({ weather, isOpen, clothingItems, onDeleteRequest, closeItemModalTick }) {
   if (!weather) return null;
   const unit = useSelector((state) => state.temperatureUnit);
   const temp = weather.temperature?.[unit];
@@ -21,7 +21,7 @@ function Profile({ weather, isOpen, clothingItems }) {
             <span className="profile__add-text">Add item</span>
           </button>
         </div>
-        <ClothesSection temperature={temp} clothingItems={clothingItems} />
+        <ClothesSection temperature={temp} clothingItems={clothingItems} onDeleteRequest={onDeleteRequest} closeItemModalTick={closeItemModalTick} />
       </div>
     </div>
   );

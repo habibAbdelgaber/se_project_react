@@ -4,7 +4,7 @@ import ItemModal from "../ItemModal/ItemModal";
 import getTemperatureRenage from "../../utils/weather";
 import "./ClothesSection.css";
 
-function ClothesSection({ temperature, clothingItems }) {
+function ClothesSection({ temperature, clothingItems, onDeleteRequest, closeItemModalTick }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentWeather, setCurrentWeather] = useState(null);
@@ -26,17 +26,19 @@ function ClothesSection({ temperature, clothingItems }) {
     setSelectedCard(null);
   };
 
+
+  useEffect(() => {
+    if (isOpen) handleClose();
+  }, [closeItemModalTick])
+
   const { name, weather, imageUrl } = selectedCard || {};
 
-  const items = (clothingItems ?? []).filter(
-    (item) => item.weather === currentWeather
-  );
 
   return (
     <>
       <Card className="clothes-section">
         <ul className="clothes-section__list">
-          {items.map((card) => (
+          {clothingItems?.map((card) => (
             <li
               key={card._id}
               className="clothes-section__item"
@@ -58,6 +60,8 @@ function ClothesSection({ temperature, clothingItems }) {
           isOpen={isOpen}
           onClose={handleClose}
           item={{ name, imageUrl, weather }}
+          onDeleteRequest={onDeleteRequest}
+          closeItemModalTick={closeItemModalTick}
         />
       )}
     </>

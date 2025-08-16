@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { currentTemperatureUnit } from "../../redux/temperature/temperatureUnitSlice";
-import { Sun, Snowflake } from "lucide-react";
 import "./ToggleSwitch.css";
 
 function ToggleSwitch() {
@@ -8,7 +7,6 @@ function ToggleSwitch() {
   const dispatch = useDispatch();
 
   const handleToggle = () => {
-    console.log(`Toggling unit from ${unit}`);
     dispatch(currentTemperatureUnit());
   };
 
