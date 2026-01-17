@@ -11,6 +11,19 @@ import { API_KEY, LATITUDE, LONGITUDE } from "../utils/constants";
 import { extractWeatherData } from "../utils/weather";
 import { weatherAPI, itemAPI } from "../utils/api";
 
+const placeholderClothingItems = [
+  { _id: "placeholder-1", name: "T-Shirt", weather: "hot", imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop" },
+  { _id: "placeholder-2", name: "Shorts", weather: "hot", imageUrl: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&h=500&fit=crop" },
+  { _id: "placeholder-3", name: "Sunglasses", weather: "very hot", imageUrl: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=500&fit=crop" },
+  { _id: "placeholder-4", name: "Light Jacket", weather: "warm", imageUrl: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=500&fit=crop" },
+  { _id: "placeholder-5", name: "Jeans", weather: "warm", imageUrl: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=500&fit=crop" },
+  { _id: "placeholder-6", name: "Sweater", weather: "cool", imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&h=500&fit=crop" },
+  { _id: "placeholder-7", name: "Hoodie", weather: "cool", imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=500&fit=crop" },
+  { _id: "placeholder-8", name: "Winter Coat", weather: "cold", imageUrl: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&h=500&fit=crop" },
+  { _id: "placeholder-9", name: "Scarf", weather: "cold", imageUrl: "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&h=500&fit=crop" },
+  { _id: "placeholder-10", name: "Beanie", weather: "cold", imageUrl: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=400&h=500&fit=crop" },
+];
+
 import Spinner from "./Spinner/Spinner";
 import APIError from "./APIError/APIError";
 
@@ -57,6 +70,7 @@ function App() {
         console.log(items);
       } catch (error) {
         console.error("Failed to fetch clothes: ", error);
+        setClothingItems(placeholderClothingItems);
       }
     };
     getClothesItems();
