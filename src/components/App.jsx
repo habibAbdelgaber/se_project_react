@@ -6,6 +6,7 @@ import Profile from "./Profile/Profile";
 import NotFound404 from "./NotFound404/NotFound404";
 import AddItemModal from "./AddItemModal/AddItemModal";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
+import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import { API_KEY, LATITUDE, LONGITUDE } from "../utils/constants";
 import { extractWeatherData } from "../utils/weather";
 import { weatherAPI, itemAPI } from "../utils/api";
@@ -176,6 +177,7 @@ function App() {
         onClose={closeDeleteConfirmation}
         onConfirm={handleDeleteConfirmation}
       />
+      <ThemeToggle />
     </>
   );
 }
