@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import { useSelector } from "react-redux";
 import ClothesSection from "../ClothesSection/ClothesSection";
-import SideBar from "../Sidebar/Sidebar";
+import SideBar from "../SideBar/SideBar";
 import "./Profile.css";
 
 function Profile({ weather, isOpen, clothingItems, onDeleteRequest, closeItemModalTick }) {
