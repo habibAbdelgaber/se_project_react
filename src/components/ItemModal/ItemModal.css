@@ -1,8 +1,7 @@
 .item__image {
   display: block;
   width: 100%;
-  height: 100%;
-  flex-grow: 1;
+  max-height: 50vh;
   object-fit: cover;
   /* border-radius: 1.6rem 1.6rem 0 0;  */ /* according to the design*/
   border-radius: 0.4rem 0.4rem 0 0; /* but this looks much better */
