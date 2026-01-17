@@ -64,6 +64,14 @@
   border-radius: 0.4rem;
 }
 
+@media (max-width: 768px) {
+  .modal__content_size_small {
+    width: calc(100% - 2rem);
+    max-width: none;
+    margin: 0 1rem;
+  }
+}
+
 .modal__content_size_medium {
   max-width: 49.6rem;
   width: clamp(30rem, 75vw, 40rem);
