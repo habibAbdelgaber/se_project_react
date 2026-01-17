@@ -1,8 +1,7 @@
 .footer {
   margin: 0;
   padding: 2rem 4rem;
-  background-color: var(--footer-bg);
-  transition: background-color 0.3s ease;
+  background-color: #1a1a2e;
 }
 
 .footer__content {
@@ -17,6 +16,20 @@
   line-height: 2rem;
   letter-spacing: 0%;
   vertical-align: bottom;
-  color: var(--footer-text);
-  transition: color 0.3s ease;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    width: calc(100% + 4rem);
+  }
+
+  .footer__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
 }
