@@ -12,7 +12,7 @@
 .sidebar__username {
   display: block;
   text-decoration: none;
-  font-family: "CabinetGrotesk", sans-serif;
+  font-family: var(--font-family);
   font-weight: 700;
   font-size: 2rem;
   line-height: 100%;

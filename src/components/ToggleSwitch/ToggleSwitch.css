@@ -51,7 +51,7 @@
   transition: left 0.3s ease;
   z-index: 1;
 
-  font-family: "CabinetGrotesk", sans-serif;
+  font-family: var(--font-family);
   font-weight: 700;
   font-size: 1.4rem;
   line-height: 100%;
