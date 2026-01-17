@@ -69,8 +69,6 @@
     width: calc(100% - 2rem);
     max-width: none;
     margin: 2rem 1rem;
-    max-height: calc(100vh - 4rem);
-    overflow-y: auto;
   }
 }
 
