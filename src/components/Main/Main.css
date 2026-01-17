@@ -1,3 +1,7 @@
+.main {
+  padding-top: 2rem;
+}
+
 .main__title {
   font-family: var(--secondary-font-family);
   font-weight: 700;
