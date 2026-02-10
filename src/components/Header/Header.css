@@ -4,9 +4,12 @@
   gap: 1.2rem;
   padding: 1.2rem 4rem;
   background-color: var(--primary-color);
-  margin-left: -4rem;
-  margin-right: -4rem;
-  width: calc(100% + 8rem);
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
 }
 
 .header__menu {
@@ -129,10 +132,11 @@
 
 @media (max-width: 768px) {
   .header {
-    position: relative;
-    margin-left: -2rem;
-    margin-right: -2rem;
-    width: calc(100% + 4rem);
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
     padding: 1.2rem 2rem;
   }
 
