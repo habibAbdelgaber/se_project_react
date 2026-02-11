@@ -2,11 +2,16 @@
   margin: 6.3rem 0 8rem;
   display: flex;
   align-items: flex-start;
+  gap: 2rem;
+}
+.profile__sidebar {
+  flex-shrink: 0;
 }
 .profile__clothes-section {
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-width: 0;
 }
 
 .profile__card {

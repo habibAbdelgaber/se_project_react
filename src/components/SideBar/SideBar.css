@@ -9,6 +9,13 @@
   align-items: center;
   gap: 1.6rem;
 }
+.sidebar__user-avatar {
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
 .sidebar__username {
   display: block;
   text-decoration: none;
