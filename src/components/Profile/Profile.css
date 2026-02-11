@@ -1,12 +1,14 @@
 .profile {
-  margin: 6.3rem 0 8rem;
+  margin: 4rem 0 6rem;
   display: flex;
   align-items: flex-start;
-  gap: 2rem;
+  gap: 3.2rem;
 }
+
 .profile__sidebar {
   flex-shrink: 0;
 }
+
 .profile__clothes-section {
   display: flex;
   flex-direction: column;
@@ -15,31 +17,51 @@
 }
 
 .profile__card {
-  margin: 1.6rem 0;
+  margin-bottom: 2rem;
   display: flex;
+  align-items: center;
   gap: 2rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--card-border);
 }
 
 .profile__items {
   display: block;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 2rem;
-  line-height: 100%;
-  color: var(--secondary-color);
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-color);
 }
+
 .profile__add-button {
-  /* background-color: red; */
   display: flex;
   align-items: center;
+  gap: 0.4rem;
   font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 2rem;
-  line-height: 100%;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--accent-color);
+  background: none;
+  border: 1px solid var(--accent-color);
+  border-radius: 0.8rem;
+  padding: 0.8rem 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
-.profile__add-icon,
+
+.profile__add-button:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.profile__add-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 .profile__add-text {
-  color: #00000099;
   display: block;
 }
 
@@ -47,9 +69,20 @@
   .profile {
     flex-direction: column;
     width: 100%;
+    gap: 2rem;
+    margin: 2rem 0 4rem;
   }
+
   .profile__sidebar {
     width: 100%;
     flex: none;
+  }
+
+  .profile__card {
+    margin-bottom: 1.6rem;
+  }
+
+  .profile__items {
+    font-size: 2rem;
   }
 }
