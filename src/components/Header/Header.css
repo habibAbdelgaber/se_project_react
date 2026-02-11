@@ -13,11 +13,17 @@
   display: flex;
   justify-content: space-between;
   gap: 1.2rem;
-  max-width: 120rem;
+  max-width: 136rem;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 4rem;
   width: 100%;
   box-sizing: border-box;
+}
+
+@media screen and (min-width: 120rem) {
+  .header__inner {
+    padding: 0;
+  }
 }
 
 .header__menu {
@@ -149,7 +155,7 @@
   }
 
   .header__inner {
-    padding: 0 1.5rem;
+    padding: 0 2rem;
   }
 
   .header__menu {
