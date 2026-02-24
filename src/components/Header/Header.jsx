@@ -72,14 +72,14 @@ function Header({ onAddClothes, currentCity, onSignIn, onSignUp }) {
                     className="header__auth-button"
                     onClick={onSignUp}
                   >
-                    Sign Up
+                    Sign up
                   </button>
                   <button
                     type="button"
                     className="header__auth-button"
                     onClick={onSignIn}
                   >
-                    Sign In
+                    Sign in
                   </button>
                 </>
               )}
