@@ -141,12 +141,19 @@
 
   .sidebar__list {
     flex-direction: row;
-    gap: 0.4rem;
+    gap: 0.8rem;
+  }
+
+  .sidebar__item {
+    flex: 1;
   }
 
   .sidebar__link {
     white-space: nowrap;
     padding: 0.8rem 1.2rem;
     font-size: 1.4rem;
+    text-align: center;
+    background-color: var(--primary-color);
+    border-radius: 0.6rem;
   }
 }
