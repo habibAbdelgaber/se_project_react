@@ -1,15 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout/Layout";
 import Main from "./Main/Main";
 import Profile from "./Profile/Profile";
 import NotFound404 from "./NotFound404/NotFound404";
 import AddItemModal from "./AddItemModal/AddItemModal";
+import SignUpModal from "./SignUpModal/SignUpModal";
+import SignInModal from "./SignInModal/SignInModal";
+import EditProfileModal from "./EditProfileModal/EditProfileModal";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import { API_KEY, LATITUDE, LONGITUDE } from "../utils/constants";
 import { extractWeatherData } from "../utils/weather";
 import { weatherAPI, itemAPI } from "../utils/api";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 const placeholderClothingItems = [
   { _id: "placeholder-1", name: "T-Shirt", weather: "hot", imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop" },
@@ -28,7 +33,12 @@ import Spinner from "./Spinner/Spinner";
 import APIError from "./APIError/APIError";
 
 function App() {
+  const { isLoggedIn, handleSignIn, handleSignUp } = useContext(CurrentUserContext);
+
   const [formOpen, setFormOpen] = useState(false);
+  const [signUpOpen, setSignUpOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
   const [weather, setWeather] = useState(null);
   const [clothingItems, setClothingItems] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -67,7 +77,6 @@ function App() {
       try {
         const items = await itemAPI.get("/items");
         setClothingItems(items);
-        console.log(items);
       } catch (error) {
         console.error("Failed to fetch clothes: ", error);
         setClothingItems(placeholderClothingItems);
@@ -92,19 +101,15 @@ function App() {
 
     const selKey = selectedItem._id ?? selectedItem.id;
 
-    // If no id, fall back to matching by stable fields
     const match = (i) =>
       selKey
         ? (i._id ?? i.id) !== selKey
         : !(i.name === selectedItem.name && i.link === selectedItem.link);
 
-    // Snapshot for rollback
     const prevItems = clothingItems;
 
-    // UI update
     setClothingItems((prev) => prev.filter(match));
 
-    // Close the modal/UI
     setDeleteOpen(false);
     setCloseItemModalTick((t) => t + 1);
     setSelectedItem(null);
@@ -113,27 +118,47 @@ function App() {
       if (selKey) {
         await itemAPI.delete(`/items/${selKey}`);
       } else {
-        // Block the item deletion if there is no id
         console.warn("No id for item — API delete skipped.");
       }
     } catch (error) {
       console.error("Failed deleting item:", error);
-      // Rollback UI on failure
       setClothingItems(prevItems);
     }
   };
 
   const handleAddItemSubmit = async (item) => {
     try {
-      // Create a new item
       const saveItem = await itemAPI.post("/items", item);
-
-      // save item
       setClothingItems((prev) => [saveItem, ...prev]);
-      console.log(saveItem);
     } catch (error) {
       console.error("Failed creating new item:", error);
     }
+  };
+
+  const handleOpenAddItem = () => {
+    if (!isLoggedIn) {
+      setSignInOpen(true);
+      return;
+    }
+    setFormOpen(true);
+  };
+
+  const handleSignUpSubmit = async (data) => {
+    await handleSignUp(data);
+  };
+
+  const handleSignInSubmit = async (data) => {
+    await handleSignIn(data);
+  };
+
+  const switchToSignIn = () => {
+    setSignUpOpen(false);
+    setSignInOpen(true);
+  };
+
+  const switchToSignUp = () => {
+    setSignInOpen(false);
+    setSignUpOpen(true);
   };
 
   if (loading) return <Spinner />;
@@ -146,12 +171,13 @@ function App() {
           path="/"
           element={
             <Layout
-              onOpen={() => setFormOpen(true)}
+              onOpen={handleOpenAddItem}
               currentCity={weather?.city}
+              onSignIn={() => setSignInOpen(true)}
+              onSignUp={() => setSignUpOpen(true)}
             />
           }
         >
-          {/* Main route: shows WeatherCard + main */}
           <Route
             index
             element={
@@ -164,17 +190,19 @@ function App() {
             }
           />
 
-          {/* Other nested routes */}
           <Route
             path="/profile"
             element={
-              <Profile
-                weather={weather}
-                isOpen={() => setFormOpen(true)}
-                clothingItems={clothingItems}
-                onDeleteRequest={openDeleteCardConformation}
-                closeItemModalTick={closeItemModalTick}
-              />
+              <ProtectedRoute>
+                <Profile
+                  weather={weather}
+                  isOpen={handleOpenAddItem}
+                  clothingItems={clothingItems}
+                  onDeleteRequest={openDeleteCardConformation}
+                  closeItemModalTick={closeItemModalTick}
+                  onEditProfile={() => setEditProfileOpen(true)}
+                />
+              </ProtectedRoute>
             }
           />
           <Route path="*" element={<NotFound404 />} />
@@ -184,6 +212,22 @@ function App() {
         isOpen={formOpen}
         onClose={() => setFormOpen(false)}
         onAddItem={handleAddItemSubmit}
+      />
+      <SignUpModal
+        isOpen={signUpOpen}
+        onClose={() => setSignUpOpen(false)}
+        onSignUp={handleSignUpSubmit}
+        onSwitchToSignIn={switchToSignIn}
+      />
+      <SignInModal
+        isOpen={signInOpen}
+        onClose={() => setSignInOpen(false)}
+        onSignIn={handleSignInSubmit}
+        onSwitchToSignUp={switchToSignUp}
+      />
+      <EditProfileModal
+        isOpen={editProfileOpen}
+        onClose={() => setEditProfileOpen(false)}
       />
       <DeleteConfirmation
         isOpen={deleteOpen}

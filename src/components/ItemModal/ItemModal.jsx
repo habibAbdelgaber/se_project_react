@@ -1,8 +1,17 @@
+import { useContext } from "react";
 import Modal from "../Modal/Modal";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./ItemModal.css";
 
 function ItemModal({ isOpen, onClose, onDeleteRequest, item }) {
-  const { name, imageUrl, weather } = item || {};
+  const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
+  const { name, imageUrl, weather, owner } = item || {};
+
+  const isOwner =
+    isLoggedIn &&
+    currentUser &&
+    owner &&
+    (currentUser._id === owner || currentUser._id === owner._id);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="small" name="Item Details">
@@ -12,12 +21,14 @@ function ItemModal({ isOpen, onClose, onDeleteRequest, item }) {
           <div className="item__content">
             <div className="item__header">
               <h3 className="item__title">{name}</h3>
-              <button
-                className="item__delete-button"
-                onClick={() => onDeleteRequest(item)}
-              >
-                Delete {name} item!
-              </button>
+              {isOwner && (
+                <button
+                  className="item__delete-button"
+                  onClick={() => onDeleteRequest(item)}
+                >
+                  Delete {name} item!
+                </button>
+              )}
             </div>
             <p className="item__caption-weather">Weather: {weather}</p>
           </div>

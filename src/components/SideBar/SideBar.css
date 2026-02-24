@@ -35,6 +35,22 @@
   box-shadow: 0 6px 20px rgba(0, 163, 255, 0.3);
 }
 
+.sidebar__avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: #fff;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 3.2rem;
+  border: 3px solid var(--accent-color);
+  flex-shrink: 0;
+}
+
 .sidebar__username {
   display: block;
   text-decoration: none;
@@ -84,6 +100,14 @@
 .sidebar__link:hover {
   color: var(--accent-color);
   background-color: var(--primary-color);
+}
+
+.sidebar__link-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
 }
 
 @media screen and (max-width: 768px) {

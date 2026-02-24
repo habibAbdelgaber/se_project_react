@@ -144,6 +144,38 @@
   object-fit: cover;
 }
 
+.header__avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: #fff;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.header__auth-button {
+  display: block;
+  font-family: var(--secondary-font-family);
+  font-weight: 700;
+  font-size: var(--primary-font-size);
+  line-height: 2.4rem;
+  padding: 0.8rem 0;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.header__auth-button:hover {
+  color: var(--accent-color);
+}
+
 @media (max-width: 768px) {
   .header {
     left: 50%;

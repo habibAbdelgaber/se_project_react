@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { getImage } from "../../utils/imageMap";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Header.css";
 
-function Header({ onAddClothes, currentCity }) {
+function Header({ onAddClothes, currentCity, onSignIn, onSignUp }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
   const wtwr = getImage("WTWR");
-  const avatarOn = getImage("Avatar On");
 
-  //Navigation item is active
   const isActive = ({ isActive }) =>
     `header__link ${isActive ? "header__link-active" : ""}`;
   const handleMenuToggle = () => {
@@ -22,6 +22,8 @@ function Header({ onAddClothes, currentCity }) {
   });
 
   if (!currentCity) return null;
+
+  const userInitial = currentUser?.name?.charAt(0)?.toUpperCase() || "";
 
   return (
     <>
@@ -50,26 +52,53 @@ function Header({ onAddClothes, currentCity }) {
             </li>
             <li className="header__item">
               <ToggleSwitch />
-              <button
-                type="button"
-                className="header__add-button"
-                onClick={onAddClothes}
-              >
-                + add clothes
-              </button>
-              <NavLink to="/profile" className={isActive}>
-                Terrence Tegegne
-              </NavLink>
+              {isLoggedIn ? (
+                <>
+                  <button
+                    type="button"
+                    className="header__add-button"
+                    onClick={onAddClothes}
+                  >
+                    + add clothes
+                  </button>
+                  <NavLink to="/profile" className={isActive}>
+                    {currentUser?.name || "Profile"}
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className="header__auth-button"
+                    onClick={onSignUp}
+                  >
+                    Sign Up
+                  </button>
+                  <button
+                    type="button"
+                    className="header__auth-button"
+                    onClick={onSignIn}
+                  >
+                    Sign In
+                  </button>
+                </>
+              )}
             </li>
           </ul>
 
           <ul className="header__list">
             <li className="header__item">
-              <img
-                src={avatarOn.image}
-                alt={avatarOn.name}
-                className="header__avatar"
-              />
+              {isLoggedIn && currentUser?.avatar ? (
+                <img
+                  src={currentUser.avatar}
+                  alt={currentUser.name}
+                  className="header__avatar"
+                />
+              ) : isLoggedIn ? (
+                <div className="header__avatar-placeholder">
+                  {userInitial}
+                </div>
+              ) : null}
             </li>
           </ul>
         </div>

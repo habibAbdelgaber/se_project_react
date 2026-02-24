@@ -4,14 +4,14 @@ import ClothesSection from "../ClothesSection/ClothesSection";
 import SideBar from "../SideBar/SideBar";
 import "./Profile.css";
 
-function Profile({ weather, isOpen, clothingItems, onDeleteRequest, closeItemModalTick }) {
+function Profile({ weather, isOpen, clothingItems, onDeleteRequest, closeItemModalTick, onEditProfile }) {
   if (!weather) return null;
   const unit = useSelector((state) => state.temperatureUnit);
   const temp = weather.temperature?.[unit];
   return (
     <div className="profile">
       <div className="profile__sidebar">
-        <SideBar />
+        <SideBar onEditProfile={onEditProfile} />
       </div>
       <div className="profile__clothes-section">
         <div className="profile__card">

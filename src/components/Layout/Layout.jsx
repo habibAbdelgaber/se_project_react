@@ -5,12 +5,17 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "./Layout.css";
 
-function Layout({ onOpen, currentCity }) {
+function Layout({ onOpen, currentCity, onSignIn, onSignUp }) {
   return (
     <Page>
       <div className="layout">
         <Container>
-          <Header onAddClothes={onOpen} currentCity={currentCity} />
+          <Header
+            onAddClothes={onOpen}
+            currentCity={currentCity}
+            onSignIn={onSignIn}
+            onSignUp={onSignUp}
+          />
           <main>
             <Outlet />
           </main>

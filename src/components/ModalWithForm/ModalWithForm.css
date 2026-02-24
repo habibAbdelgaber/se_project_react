@@ -36,3 +36,28 @@
   pointer-events: none;
   opacity: 0.5;
 }
+
+.form__alt-button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: 1.4rem;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  text-decoration: underline;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.form__alt-button:hover {
+  opacity: 1;
+}
+
+.form__error-message {
+  color: var(--accent-error-color);
+  font-size: 1.3rem;
+  font-family: var(--font-family);
+  text-align: center;
+}
