@@ -1,31 +1,62 @@
-# WTWR (What To Wear)
+# WTWR (What to Wear)
 
-[![GitHub Pages](https://img.shields.io/badge/Live%20on-GitHub%20Pages-2ea44f?logo=github&style=flat-square)](https://weather.pymastery.com)
+## Overview
+A React-based weather application that suggests clothing based on current weather conditions. Built with Vite, React 19, Redux Toolkit, and React Router. Includes user authentication with JWT tokens.
 
-A simple weather-based clothing recommendation SPA built with React + Vite.
+## Project Structure
+- `src/components/` - React components (App, Header, Main, Profile, etc.)
+- `src/contexts/` - React context providers (CurrentUserContext for auth)
+- `src/hooks/` - Custom hooks (useForm, useFormValidation)
+- `src/utils/` - Utility functions (api.js, auth.js, token.js, constants.js, weather.js)
+- `src/styles/` - CSS variables and base styles
+- `src/assets/` - Images and icons
+- `src/app/` - Redux store configuration
 
-WTWR (What To Wear) is a simple yet practical single-page weather application built with React **_(Vite)_**. It displays the current weather conditions in Fahrenheit, along with suggestions for clothing that is suitable for the weather.
+## Key Technologies
+- Vite 7 (build tool)
+- React 19
+- Redux Toolkit + React Redux
+- React Router DOM
+- Lucide React (icons)
+- Google Fonts: Space Grotesk
 
-The application is designed to be user-friendly and responsive, ensuring a smooth experience across most common small-screen devices.
+## Authentication
+- JWT token stored in localStorage for persistent sessions
+- `src/utils/token.js` - get/set/remove token from localStorage
+- `src/utils/auth.js` - signup, signin, getUserProfile, updateUserProfile API calls
+- `src/contexts/CurrentUserContext.jsx` - provides currentUser, isLoggedIn, auth handlers
+- Protected routes: /profile requires login
+- Only logged-in users can add clothing items
+- Only item owners can delete their items
+- SignUp, SignIn, EditProfile modals built with ModalWithForm pattern
 
-Future enhancements will include features such as likes, comments, and additional interactive functionality to enrich the user experience.
+## API Endpoints (Backend on port 3001)
+- POST /signup - register new user
+- POST /signin - login user (returns JWT token)
+- GET /users/me - get current user profile (auth required)
+- PATCH /users/me - update profile (auth required)
+- GET /items - get all clothing items (public)
+- POST /items - create item (auth required)
+- DELETE /items/:id - delete item (auth required, owner only)
 
-## Hard skills (technologies)
+## Development
+- Frontend runs on port 5000
+- Uses OpenWeatherMap API for weather data (API key in .env)
+- Item API expects backend on port 3001 (falls back to placeholder items if unavailable)
 
-- HTML5
-- CSS3
-- Javascript
-- Reactjsx (Javascript library)
+## User Preferences
+- Font: Space Grotesk (Google Fonts)
+- Dark/light theme toggle (saved to localStorage)
+- Header: full-width background, content constrained to 136rem max-width with 4rem padding
 
-## 🌐 Live Demo
-
-👉 [View Live Site](https://weather.pymastery.com)
-
-## 🚀 Deployment
-
-**Live App:**  
-🌐 [`https://weather.pymastery.com`](https://weather.pymastery.com)
-
-[![GitHub Pages](https://img.shields.io/badge/Live%20on-GitHub%20Pages-2ea44f?logo=github&style=flat-square)](https://weather.pymastery.com)
-
-> ✅ This project is deployed using GitHub Pages and uses a custom domain: [`weather.pymastery.com`](https://weather.pymastery.com)
+## Recent Changes
+- February 24, 2026: Implemented full authentication system
+  - SignUp (name, avatar, email, password), SignIn, EditProfile, SignOut
+  - CurrentUserContext for auth state management
+  - Protected profile route, auth-gated add/delete
+  - Token persistence in localStorage
+- February 11, 2026: Improved Profile page styling
+  - Sidebar with card design, accent-colored avatar ring, styled nav links
+  - Edit Profile and Sign Out buttons in sidebar
+- January 17, 2026: Added dark/light mode theme toggle
+- January 17, 2026: Configured for Replit environment
