@@ -5,8 +5,8 @@ import Main from "./Main/Main";
 import Profile from "./Profile/Profile";
 import NotFound404 from "./NotFound404/NotFound404";
 import AddItemModal from "./AddItemModal/AddItemModal";
-import SignUpModal from "./SignUpModal/SignUpModal";
-import SignInModal from "./SignInModal/SignInModal";
+import RegisterModal from "./RegisterModal/RegisterModal";
+import LoginModal from "./LoginModal/LoginModal";
 import EditProfileModal from "./EditProfileModal/EditProfileModal";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
@@ -213,13 +213,13 @@ function App() {
         onClose={() => setFormOpen(false)}
         onAddItem={handleAddItemSubmit}
       />
-      <SignUpModal
+      <RegisterModal
         isOpen={signUpOpen}
         onClose={() => setSignUpOpen(false)}
         onSignUp={handleSignUpSubmit}
         onSwitchToSignIn={switchToSignIn}
       />
-      <SignInModal
+      <LoginModal
         isOpen={signInOpen}
         onClose={() => setSignInOpen(false)}
         onSignIn={handleSignInSubmit}

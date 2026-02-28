@@ -2,7 +2,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import InputField from "../InputField/InputField";
 import useForm from "../../hooks/useForm";
 
-function SignInModal({ isOpen, onClose, onSignIn, onSwitchToSignUp }) {
+function RegisterModal({ isOpen, onClose, onSignUp, onSwitchToSignIn }) {
   const {
     values,
     errors,
@@ -12,8 +12,10 @@ function SignInModal({ isOpen, onClose, onSignIn, onSwitchToSignUp }) {
     handleBlur,
     handleFocus,
     reset,
-  } = useForm({ email: "", password: "" }, async (vals) => {
-    await onSignIn({
+  } = useForm({ name: "", avatar: "", email: "", password: "" }, async (vals) => {
+    await onSignUp({
+      name: vals.name.trim(),
+      avatar: vals.avatar.trim(),
       email: vals.email.trim(),
       password: vals.password,
     });
@@ -21,7 +23,11 @@ function SignInModal({ isOpen, onClose, onSignIn, onSwitchToSignUp }) {
     onClose();
   });
 
-  const hasBasics = values.email.trim() && values.password.length >= 6;
+  const hasBasics =
+    values.name.trim() &&
+    values.email.trim() &&
+    values.password.length >= 6;
+
   const isFormValid = hasBasics && Object.keys(errors).length === 0;
 
   return (
@@ -32,15 +38,15 @@ function SignInModal({ isOpen, onClose, onSignIn, onSwitchToSignUp }) {
         onClose();
       }}
       onSubmit={handleSubmit}
-      title="Sign In"
-      name="signin-form"
+      title="Sign Up"
+      name="signup-form"
       size="medium"
       disabled={!isFormValid}
-      buttonText="Sign In"
+      buttonText="Sign Up"
     >
       <InputField
         label="Email"
-        id="signin-email"
+        id="signup-email"
         name="email"
         type="email"
         value={values.email}
@@ -53,11 +59,11 @@ function SignInModal({ isOpen, onClose, onSignIn, onSwitchToSignUp }) {
       />
       <InputField
         label="Password"
-        id="signin-password"
+        id="signup-password"
         name="password"
         type="password"
         value={values.password}
-        placeholder="Password"
+        placeholder="Password (min 6 characters)"
         minLength="6"
         required
         onChange={handleChange}
@@ -65,15 +71,42 @@ function SignInModal({ isOpen, onClose, onSignIn, onSwitchToSignUp }) {
         onBlur={handleBlur}
         error={touched.password && errors.password}
       />
+      <InputField
+        label="Name"
+        id="signup-name"
+        name="name"
+        type="text"
+        value={values.name}
+        placeholder="Name"
+        minLength="2"
+        maxLength="30"
+        required
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        error={touched.name && errors.name}
+      />
+      <InputField
+        label="Avatar URL"
+        id="signup-avatar"
+        name="avatar"
+        type="url"
+        value={values.avatar}
+        placeholder="Avatar URL (optional)"
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        error={touched.avatar && errors.avatar}
+      />
       <button
         type="button"
         className="form__alt-button"
-        onClick={onSwitchToSignUp}
+        onClick={onSwitchToSignIn}
       >
-        or Sign Up
+        or Sign In
       </button>
     </ModalWithForm>
   );
 }
 
-export default SignInModal;
+export default RegisterModal;
