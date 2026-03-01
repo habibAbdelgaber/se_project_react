@@ -16,7 +16,7 @@ function EditProfileModal({ isOpen, onClose }) {
     handleChange,
     handleBlur,
     handleFocus,
-    reset,
+    setFormValues,
   } = useForm(
     { name: currentUser?.name || "", avatar: currentUser?.avatar || "" },
     (vals) => {
@@ -36,7 +36,10 @@ function EditProfileModal({ isOpen, onClose }) {
 
   useEffect(() => {
     if (isOpen && currentUser) {
-      reset();
+      setFormValues({
+        name: currentUser.name || "",
+        avatar: currentUser.avatar || "",
+      });
     }
   }, [isOpen]);
 

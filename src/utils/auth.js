@@ -1,24 +1,13 @@
 import { API_URL } from "./constants";
 import { getToken } from "./token";
-
-const processServerResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return res
-    .json()
-    .catch(() => ({}))
-    .then((data) => {
-      return Promise.reject(new Error(data.message || `Error: ${res.status}`));
-    });
-};
+import checkResponse from "./http";
 
 export const signup = ({ name, avatar, email, password }) => {
   return fetch(`${API_URL}/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, avatar, email, password }),
-  }).then(processServerResponse);
+  }).then(checkResponse);
 };
 
 export const signin = ({ email, password }) => {
@@ -26,7 +15,7 @@ export const signin = ({ email, password }) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
-  }).then(processServerResponse);
+  }).then(checkResponse);
 };
 
 export const getUserProfile = () => {
@@ -36,7 +25,7 @@ export const getUserProfile = () => {
       "Content-Type": "application/json",
       authorization: `Bearer ${getToken()}`,
     },
-  }).then(processServerResponse);
+  }).then(checkResponse);
 };
 
 export const updateUserProfile = ({ name, avatar }) => {
@@ -47,5 +36,5 @@ export const updateUserProfile = ({ name, avatar }) => {
       authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify({ name, avatar }),
-  }).then(processServerResponse);
+  }).then(checkResponse);
 };

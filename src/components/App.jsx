@@ -42,7 +42,6 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [closeItemModalTick, setCloseItemModalTick] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     getWeather()
@@ -51,7 +50,7 @@ function App() {
         setWeather(extracted);
       })
       .catch((err) => {
-        setError(err.message);
+        console.error("Failed to fetch weather:", err);
       })
       .finally(() => {
         setLoading(false);
@@ -83,20 +82,20 @@ function App() {
   const handleDeleteConfirmation = () => {
     if (!selectedItem) return;
 
-    const selKey = selectedItem._id ?? selectedItem.id;
+    const selectedItemId = selectedItem._id ?? selectedItem.id;
 
     const prevItems = clothingItems;
 
     setClothingItems((prev) =>
-      prev.filter((i) => (i._id ?? i.id) !== selKey)
+      prev.filter((i) => (i._id ?? i.id) !== selectedItemId)
     );
 
     setDeleteOpen(false);
     setCloseItemModalTick((t) => t + 1);
     setSelectedItem(null);
 
-    if (selKey) {
-      deleteItem(selKey).catch((err) => {
+    if (selectedItemId) {
+      deleteItem(selectedItemId).catch((err) => {
         console.error("Failed deleting item:", err);
         setClothingItems(prevItems);
       });
@@ -139,13 +138,13 @@ function App() {
   };
 
   const handleSignUpSubmit = (data) => {
-    handleSignUp(data).catch((err) => {
+    return handleSignUp(data).catch((err) => {
       console.error("Sign up failed:", err);
     });
   };
 
   const handleSignInSubmit = (data) => {
-    handleSignIn(data).catch((err) => {
+    return handleSignIn(data).catch((err) => {
       console.error("Sign in failed:", err);
     });
   };
@@ -161,7 +160,6 @@ function App() {
   };
 
   if (loading) return <Spinner />;
-  if (error) return <p>{`Error fetching weather: ${error}`}</p>;
 
   const userClothingItems = isLoggedIn && currentUser
     ? (clothingItems ?? []).filter(
@@ -202,7 +200,7 @@ function App() {
               <ProtectedRoute>
                 <Profile
                   weather={weather}
-                  isOpen={handleOpenAddItem}
+                  onAddItem={handleOpenAddItem}
                   clothingItems={userClothingItems}
                   onDeleteRequest={openDeleteCardConformation}
                   closeItemModalTick={closeItemModalTick}

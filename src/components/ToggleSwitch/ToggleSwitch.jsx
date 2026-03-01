@@ -1,29 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
-import { currentTemperatureUnit } from "../../redux/temperature/temperatureUnitSlice";
+import { useContext } from "react";
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import "./ToggleSwitch.css";
 
 function ToggleSwitch() {
-  const unit = useSelector((state) => state.temperatureUnit);
-  const dispatch = useDispatch();
-
-  const handleToggle = () => {
-    dispatch(currentTemperatureUnit());
-  };
+  const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
+    CurrentTemperatureUnitContext
+  );
 
   return (
     <div
       className="toggle-container"
-      onClick={handleToggle}
+      onClick={handleToggleSwitchChange}
       role="switch"
-      aria-checked={unit === "F"}
+      aria-checked={currentTemperatureUnit === "F"}
     >
-      {/* Hint Labels */}
       <span className="toggle-label left">F</span>
       <span className="toggle-label right">C</span>
-
-      {/* Thumb */}
-      <div className={`toggle-thumb ${unit === "F" ? "left" : "right"}`}>
-        {unit}
+      <div
+        className={`toggle-thumb ${currentTemperatureUnit === "F" ? "left" : "right"}`}
+      >
+        {currentTemperatureUnit}
       </div>
     </div>
   );

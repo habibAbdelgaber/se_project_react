@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useContext } from "react";
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { WEATHER_ICON_URL } from "../../utils/constants";
 import { weatherColors } from "../../utils/weatherColors";
 import "./WeatherCard.css";
@@ -12,9 +13,9 @@ function getBackgroundColor(condition, timeOfDay) {
 }
 
 export default function WeatherCard({ weather }) {
-  const unit = useSelector((state) => state.temperatureUnit);
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   if (!weather) return null;
-  const temp = weather.temperature?.[unit];
+  const temp = weather.temperature?.[currentTemperatureUnit];
 
   const { condition, icon, description, sys } = weather;
 
@@ -30,7 +31,7 @@ export default function WeatherCard({ weather }) {
     <div className="weather" style={{ backgroundColor }}>
       <img src={iconUrl} alt={description} className="weather__icon" />
       <h2 className="weather__text">
-        {temp}°{unit}
+        {temp}°{currentTemperatureUnit}
       </h2>
     </div>
   );

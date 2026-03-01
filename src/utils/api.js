@@ -1,17 +1,6 @@
 import { API_URL } from "./constants";
 import { getToken } from "./token";
-
-const processServerResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return res
-    .json()
-    .catch(() => ({}))
-    .then((data) => {
-      return Promise.reject(new Error(data.message || `Error: ${res.status}`));
-    });
-};
+import checkResponse from "./http";
 
 const getAuthHeaders = () => {
   const token = getToken();
@@ -22,7 +11,7 @@ const getAuthHeaders = () => {
 };
 
 export const getItems = () => {
-  return fetch(`${API_URL}/items`).then(processServerResponse);
+  return fetch(`${API_URL}/items`).then(checkResponse);
 };
 
 export const addItem = (item) => {
@@ -30,26 +19,26 @@ export const addItem = (item) => {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(item),
-  }).then(processServerResponse);
+  }).then(checkResponse);
 };
 
 export const deleteItem = (itemId) => {
   return fetch(`${API_URL}/items/${itemId}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
-  }).then(processServerResponse);
+  }).then(checkResponse);
 };
 
 export const addCardLike = (itemId) => {
   return fetch(`${API_URL}/items/${itemId}/likes`, {
     method: "PUT",
     headers: getAuthHeaders(),
-  }).then(processServerResponse);
+  }).then(checkResponse);
 };
 
 export const removeCardLike = (itemId) => {
   return fetch(`${API_URL}/items/${itemId}/likes`, {
     method: "DELETE",
     headers: getAuthHeaders(),
-  }).then(processServerResponse);
+  }).then(checkResponse);
 };

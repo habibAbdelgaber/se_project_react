@@ -9,9 +9,8 @@ function useForm(initialValues = {}, onSubmit) {
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
 
-    // A single-choice checkbox group
     if (type === "checkbox") {
-      setValues((prev) => ({ ...prev, [name]: [value] })); // not boolean!
+      setValues((prev) => ({ ...prev, [name]: [value] }));
       setTouched((prev) => ({ ...prev, [name]: true }));
       return;
     }
@@ -36,7 +35,6 @@ function useForm(initialValues = {}, onSubmit) {
     if (Object.keys(errors).length === 0) {
       onSubmit?.(values);
     } else {
-      // Mark all as touched so errors show
       const allTouched = Object.keys(values).reduce((acc, k) => {
         acc[k] = true;
         return acc;
@@ -50,6 +48,11 @@ function useForm(initialValues = {}, onSubmit) {
     setTouched({});
   };
 
+  const setFormValues = (newValues) => {
+    setValues(newValues);
+    setTouched({});
+  };
+
   return {
     values,
     errors,
@@ -59,6 +62,7 @@ function useForm(initialValues = {}, onSubmit) {
     handleFocus,
     handleSubmit,
     reset,
+    setFormValues,
   };
 }
 

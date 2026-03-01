@@ -1,16 +1,10 @@
 import { BASE_URL, API_KEY, coordinates } from "./constants";
-
-const processServerResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(new Error(`Error: ${res.status}`));
-};
+import checkResponse from "./http";
 
 export const getWeather = () => {
   return fetch(
     `${BASE_URL}weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=imperial&appid=${API_KEY}`
-  ).then(processServerResponse);
+  ).then(checkResponse);
 };
 
 export const extractWeatherData = (data) => {

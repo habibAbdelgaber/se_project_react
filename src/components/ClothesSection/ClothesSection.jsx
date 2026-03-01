@@ -33,8 +33,6 @@ function ClothesSection({ temperature, clothingItems, onDeleteRequest, closeItem
     if (isOpen) handleClose();
   }, [closeItemModalTick]);
 
-  const { name, weather, imageUrl } = selectedCard || {};
-
   const isLiked = (item) => {
     return item.likes?.some((u) => (u._id ?? u) === currentUser?._id);
   };
@@ -87,7 +85,7 @@ function ClothesSection({ temperature, clothingItems, onDeleteRequest, closeItem
         <ItemModal
           isOpen={isOpen}
           onClose={handleClose}
-          item={{ name, imageUrl, weather }}
+          item={selectedCard}
           onDeleteRequest={onDeleteRequest}
           closeItemModalTick={closeItemModalTick}
         />
