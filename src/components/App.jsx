@@ -11,10 +11,11 @@ import EditProfileModal from "./EditProfileModal/EditProfileModal";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
-import { API_KEY, LATITUDE, LONGITUDE } from "../utils/constants";
-import { extractWeatherData } from "../utils/weather";
-import { weatherAPI, itemAPI } from "../utils/api";
+import { getWeather, extractWeatherData } from "../utils/weatherApi";
+import { getItems, addItem, deleteItem, addCardLike, removeCardLike } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import Spinner from "./Spinner/Spinner";
+import APIError from "./APIError/APIError";
 
 const placeholderClothingItems = [
   { _id: "placeholder-1", name: "T-Shirt", weather: "hot", imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop" },
@@ -28,9 +29,6 @@ const placeholderClothingItems = [
   { _id: "placeholder-9", name: "Scarf", weather: "cold", imageUrl: "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&h=500&fit=crop" },
   { _id: "placeholder-10", name: "Beanie", weather: "cold", imageUrl: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=400&h=500&fit=crop" },
 ];
-
-import Spinner from "./Spinner/Spinner";
-import APIError from "./APIError/APIError";
 
 function App() {
   const { currentUser, isLoggedIn, handleSignIn, handleSignUp } = useContext(CurrentUserContext);
@@ -48,41 +46,28 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const response = await weatherAPI.get("weather", {
-          params: {
-            lat: LATITUDE,
-            lon: LONGITUDE,
-            units: "imperial",
-            appid: API_KEY,
-          },
-        });
-
-        const extracted = extractWeatherData(response);
+    getWeather()
+      .then((data) => {
+        const extracted = extractWeatherData(data);
         setWeather(extracted);
-
-        setLoading(false);
-      } catch (err) {
+      })
+      .catch((err) => {
         setError(err.message);
-      } finally {
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-    fetchWeather();
+      });
   }, []);
 
   useEffect(() => {
-    const getClothesItems = async () => {
-      try {
-        const items = await itemAPI.get("/items");
+    getItems()
+      .then((items) => {
         setClothingItems(items);
-      } catch (error) {
-        console.error("Failed to fetch clothes: ", error);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch clothes: ", err);
         setClothingItems(placeholderClothingItems);
-      }
-    };
-    getClothesItems();
+      });
   }, []);
 
   const openDeleteCardConformation = (item) => {
@@ -96,60 +81,54 @@ function App() {
     setSelectedItem(null);
   };
 
-  const handleDeleteConfirmation = async () => {
+  const handleDeleteConfirmation = () => {
     if (!selectedItem) return;
 
     const selKey = selectedItem._id ?? selectedItem.id;
 
-    const match = (i) =>
-      selKey
-        ? (i._id ?? i.id) !== selKey
-        : !(i.name === selectedItem.name && i.link === selectedItem.link);
-
     const prevItems = clothingItems;
 
-    setClothingItems((prev) => prev.filter(match));
+    setClothingItems((prev) =>
+      prev.filter((i) => (i._id ?? i.id) !== selKey)
+    );
 
     setDeleteOpen(false);
     setCloseItemModalTick((t) => t + 1);
     setSelectedItem(null);
 
-    try {
-      if (selKey) {
-        await itemAPI.delete(`/items/${selKey}`);
-      } else {
-        console.warn("No id for item — API delete skipped.");
-      }
-    } catch (error) {
-      console.error("Failed deleting item:", error);
-      setClothingItems(prevItems);
+    if (selKey) {
+      deleteItem(selKey).catch((err) => {
+        console.error("Failed deleting item:", err);
+        setClothingItems(prevItems);
+      });
     }
   };
 
-  const handleAddItemSubmit = async (item) => {
-    try {
-      const saveItem = await itemAPI.post("/items", item);
-      setClothingItems((prev) => [saveItem, ...prev]);
-    } catch (error) {
-      console.error("Failed creating new item:", error);
-    }
+  const handleAddItemSubmit = (item) => {
+    addItem(item)
+      .then((saveItem) => {
+        setClothingItems((prev) => [saveItem, ...prev]);
+      })
+      .catch((err) => {
+        console.error("Failed creating new item:", err);
+      });
   };
 
-  const handleCardLike = async ({ id, isLiked }) => {
-    try {
-      const updatedCard = isLiked
-        ? await itemAPI.removeCardLike(id)
-        : await itemAPI.addCardLike(id);
-      setClothingItems((prev) =>
-        prev.map((item) =>
-          (item._id ?? item.id) === (updatedCard._id ?? updatedCard.id)
-            ? updatedCard
-            : item
-        )
-      );
-    } catch (error) {
-      console.error("Failed toggling like:", error);
-    }
+  const handleCardLike = ({ id, isLiked }) => {
+    const likeRequest = isLiked ? removeCardLike(id) : addCardLike(id);
+    likeRequest
+      .then((updatedCard) => {
+        setClothingItems((prev) =>
+          prev.map((item) =>
+            (item._id ?? item.id) === (updatedCard._id ?? updatedCard.id)
+              ? updatedCard
+              : item
+          )
+        );
+      })
+      .catch((err) => {
+        console.error("Failed toggling like:", err);
+      });
   };
 
   const handleOpenAddItem = () => {
@@ -160,12 +139,16 @@ function App() {
     setFormOpen(true);
   };
 
-  const handleSignUpSubmit = async (data) => {
-    await handleSignUp(data);
+  const handleSignUpSubmit = (data) => {
+    handleSignUp(data).catch((err) => {
+      console.error("Sign up failed:", err);
+    });
   };
 
-  const handleSignInSubmit = async (data) => {
-    await handleSignIn(data);
+  const handleSignInSubmit = (data) => {
+    handleSignIn(data).catch((err) => {
+      console.error("Sign in failed:", err);
+    });
   };
 
   const switchToSignIn = () => {

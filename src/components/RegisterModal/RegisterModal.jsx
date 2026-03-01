@@ -12,15 +12,20 @@ function RegisterModal({ isOpen, onClose, onSignUp, onSwitchToSignIn }) {
     handleBlur,
     handleFocus,
     reset,
-  } = useForm({ name: "", avatar: "", email: "", password: "" }, async (vals) => {
-    await onSignUp({
+  } = useForm({ name: "", avatar: "", email: "", password: "" }, (vals) => {
+    onSignUp({
       name: vals.name.trim(),
       avatar: vals.avatar.trim(),
       email: vals.email.trim(),
       password: vals.password,
-    });
-    reset();
-    onClose();
+    })
+      .then(() => {
+        reset();
+        onClose();
+      })
+      .catch((err) => {
+        console.error("Sign up failed:", err);
+      });
   });
 
   const hasBasics =

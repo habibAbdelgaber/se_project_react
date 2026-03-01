@@ -19,13 +19,18 @@ function EditProfileModal({ isOpen, onClose }) {
     reset,
   } = useForm(
     { name: currentUser?.name || "", avatar: currentUser?.avatar || "" },
-    async (vals) => {
-      const updated = await updateUserProfile({
+    (vals) => {
+      updateUserProfile({
         name: vals.name.trim(),
         avatar: vals.avatar.trim(),
-      });
-      handleUpdateUser(updated);
-      onClose();
+      })
+        .then((updated) => {
+          handleUpdateUser(updated);
+          onClose();
+        })
+        .catch((err) => {
+          console.error("Failed to update profile:", err);
+        });
     }
   );
 

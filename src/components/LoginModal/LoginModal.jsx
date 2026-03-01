@@ -12,13 +12,18 @@ function LoginModal({ isOpen, onClose, onSignIn, onSwitchToSignUp }) {
     handleBlur,
     handleFocus,
     reset,
-  } = useForm({ email: "", password: "" }, async (vals) => {
-    await onSignIn({
+  } = useForm({ email: "", password: "" }, (vals) => {
+    onSignIn({
       email: vals.email.trim(),
       password: vals.password,
-    });
-    reset();
-    onClose();
+    })
+      .then(() => {
+        reset();
+        onClose();
+      })
+      .catch((err) => {
+        console.error("Sign in failed:", err);
+      });
   });
 
   const hasBasics = values.email.trim() && values.password.length >= 6;

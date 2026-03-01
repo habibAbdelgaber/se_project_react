@@ -1,68 +1,55 @@
-import { BASE_URL, API_URL } from "./constants";
+import { API_URL } from "./constants";
 import { getToken } from "./token";
 
-const apiFetch = async (
-  base,
-  endpoint,
-  { method = "GET", body = null, headers = {}, params = {}, auth = false } = {}
-) => {
-  let url = `${base}${endpoint}`;
-
-  if (params && Object.keys(params).length > 0) {
-    const queryString = new URLSearchParams(params).toString();
-    url += url.includes("?") ? `&${queryString}` : `?${queryString}`;
+const processServerResponse = (res) => {
+  if (res.ok) {
+    return res.json();
   }
+  return res
+    .json()
+    .catch(() => ({}))
+    .then((data) => {
+      return Promise.reject(new Error(data.message || `Error: ${res.status}`));
+    });
+};
 
-  const config = {
-    method,
-    headers: {
-      ...headers,
-    },
+const getAuthHeaders = () => {
+  const token = getToken();
+  return {
+    "Content-Type": "application/json",
+    authorization: `Bearer ${token}`,
   };
-
-  if (auth) {
-    const token = getToken();
-    if (token) {
-      config.headers["authorization"] = `Bearer ${token}`;
-    }
-  }
-
-  if (body) {
-    config.headers["Content-Type"] = "application/json";
-    config.body = JSON.stringify(body);
-  }
-
-  try {
-    const response = await fetch(url, config);
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `API error: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("API fetch error:", error);
-    throw error;
-  }
 };
 
-export const weatherAPI = {
-  get: (endpoint, options) =>
-    apiFetch(BASE_URL, endpoint, { ...options, method: "GET" }),
+export const getItems = () => {
+  return fetch(`${API_URL}/items`).then(processServerResponse);
 };
 
-export const itemAPI = {
-  get: (endpoint, options) =>
-    apiFetch(API_URL, endpoint, { ...options, method: "GET" }),
-  post: (endpoint, body, options) =>
-    apiFetch(API_URL, endpoint, { ...options, method: "POST", body, auth: true }),
-  put: (endpoint, body, options) =>
-    apiFetch(API_URL, endpoint, { ...options, method: "PUT", body, auth: true }),
-  patch: (endpoint, body, options) =>
-    apiFetch(API_URL, endpoint, { ...options, method: "PATCH", body, auth: true }),
-  delete: (endpoint, options) =>
-    apiFetch(API_URL, endpoint, { ...options, method: "DELETE", auth: true }),
-  addCardLike: (itemId) =>
-    apiFetch(API_URL, `/items/${itemId}/likes`, { method: "PUT", auth: true }),
-  removeCardLike: (itemId) =>
-    apiFetch(API_URL, `/items/${itemId}/likes`, { method: "DELETE", auth: true }),
+export const addItem = (item) => {
+  return fetch(`${API_URL}/items`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify(item),
+  }).then(processServerResponse);
+};
+
+export const deleteItem = (itemId) => {
+  return fetch(`${API_URL}/items/${itemId}`, {
+    method: "DELETE",
+    headers: getAuthHeaders(),
+  }).then(processServerResponse);
+};
+
+export const addCardLike = (itemId) => {
+  return fetch(`${API_URL}/items/${itemId}/likes`, {
+    method: "PUT",
+    headers: getAuthHeaders(),
+  }).then(processServerResponse);
+};
+
+export const removeCardLike = (itemId) => {
+  return fetch(`${API_URL}/items/${itemId}/likes`, {
+    method: "DELETE",
+    headers: getAuthHeaders(),
+  }).then(processServerResponse);
 };
