@@ -15,7 +15,6 @@ import { getWeather, extractWeatherData } from "../utils/weatherApi";
 import { getItems, addItem, deleteItem, addCardLike, removeCardLike } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Spinner from "./Spinner/Spinner";
-import APIError from "./APIError/APIError";
 
 const placeholderClothingItems = [
   { _id: "placeholder-1", name: "T-Shirt", weather: "hot", imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop" },
@@ -162,7 +161,7 @@ function App() {
   };
 
   if (loading) return <Spinner />;
-  if (error) return <APIError errorText={`Error fetching weather: ${error}`} />;
+  if (error) return <p>{`Error fetching weather: ${error}`}</p>;
 
   const userClothingItems = isLoggedIn && currentUser
     ? (clothingItems ?? []).filter(
