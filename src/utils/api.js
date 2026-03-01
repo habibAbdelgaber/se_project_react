@@ -61,4 +61,8 @@ export const itemAPI = {
     apiFetch(API_URL, endpoint, { ...options, method: "PATCH", body, auth: true }),
   delete: (endpoint, options) =>
     apiFetch(API_URL, endpoint, { ...options, method: "DELETE", auth: true }),
+  addCardLike: (itemId) =>
+    apiFetch(API_URL, `/items/${itemId}/likes`, { method: "PUT", auth: true }),
+  removeCardLike: (itemId) =>
+    apiFetch(API_URL, `/items/${itemId}/likes`, { method: "DELETE", auth: true }),
 };

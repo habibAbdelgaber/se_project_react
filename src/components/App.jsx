@@ -33,7 +33,7 @@ import Spinner from "./Spinner/Spinner";
 import APIError from "./APIError/APIError";
 
 function App() {
-  const { isLoggedIn, handleSignIn, handleSignUp } = useContext(CurrentUserContext);
+  const { currentUser, isLoggedIn, handleSignIn, handleSignUp } = useContext(CurrentUserContext);
 
   const [formOpen, setFormOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
@@ -135,6 +135,23 @@ function App() {
     }
   };
 
+  const handleCardLike = async ({ id, isLiked }) => {
+    try {
+      const updatedCard = isLiked
+        ? await itemAPI.removeCardLike(id)
+        : await itemAPI.addCardLike(id);
+      setClothingItems((prev) =>
+        prev.map((item) =>
+          (item._id ?? item.id) === (updatedCard._id ?? updatedCard.id)
+            ? updatedCard
+            : item
+        )
+      );
+    } catch (error) {
+      console.error("Failed toggling like:", error);
+    }
+  };
+
   const handleOpenAddItem = () => {
     if (!isLoggedIn) {
       setSignInOpen(true);
@@ -164,6 +181,12 @@ function App() {
   if (loading) return <Spinner />;
   if (error) return <APIError message={`Error fetching weather: ${error}`} />;
 
+  const userClothingItems = isLoggedIn && currentUser
+    ? (clothingItems ?? []).filter(
+        (item) => item.owner === currentUser._id || item.owner?._id === currentUser._id
+      )
+    : [];
+
   return (
     <>
       <Routes>
@@ -186,6 +209,7 @@ function App() {
                 clothingItems={clothingItems}
                 onDeleteRequest={openDeleteCardConformation}
                 closeItemModalTick={closeItemModalTick}
+                onCardLike={handleCardLike}
               />
             }
           />
@@ -197,10 +221,11 @@ function App() {
                 <Profile
                   weather={weather}
                   isOpen={handleOpenAddItem}
-                  clothingItems={clothingItems}
+                  clothingItems={userClothingItems}
                   onDeleteRequest={openDeleteCardConformation}
                   closeItemModalTick={closeItemModalTick}
                   onEditProfile={() => setEditProfileOpen(true)}
+                  onCardLike={handleCardLike}
                 />
               </ProtectedRoute>
             }

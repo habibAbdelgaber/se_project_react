@@ -4,9 +4,9 @@ import ItemCard from "../ItemCard/ItemCard";
 
 import "./Main.css";
 
-function Main({ weather, clothingItems, onDeleteRequest, closeItemModalTick }) {
-  if (!weather) return null;
+function Main({ weather, clothingItems, onDeleteRequest, closeItemModalTick, onCardLike }) {
   const unit = useSelector((state) => state.temperatureUnit);
+  if (!weather) return null;
   const temp = weather.temperature?.[unit];
   return (
     <div className="main">
@@ -19,6 +19,7 @@ function Main({ weather, clothingItems, onDeleteRequest, closeItemModalTick }) {
         clothingItems={clothingItems}
         onDeleteRequest={onDeleteRequest}
         closeItemModalTick={closeItemModalTick}
+        onCardLike={onCardLike}
       />
     </div>
   );

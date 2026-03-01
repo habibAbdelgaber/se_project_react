@@ -1,5 +1,8 @@
 # WTWR (What to Wear)
 
+## Backend Repository
+[WTWR Backend](https://github.com/your-username/se_project_express)
+
 ## Overview
 A React-based weather application that suggests clothing based on current weather conditions. Built with Vite, React 19, Redux Toolkit, and React Router. Includes user authentication with JWT tokens.
 
@@ -38,6 +41,8 @@ A React-based weather application that suggests clothing based on current weathe
 - GET /items - get all clothing items (public)
 - POST /items - create item (auth required)
 - DELETE /items/:id - delete item (auth required, owner only)
+- PUT /items/:id/likes - like an item (auth required)
+- DELETE /items/:id/likes - unlike an item (auth required)
 
 ## Development
 - Frontend runs on port 5000

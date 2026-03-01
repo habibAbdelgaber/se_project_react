@@ -12,9 +12,8 @@ function getBackgroundColor(condition, timeOfDay) {
 }
 
 export default function WeatherCard({ weather }) {
-  if (!weather) return null;
-
   const unit = useSelector((state) => state.temperatureUnit);
+  if (!weather) return null;
   const temp = weather.temperature?.[unit];
 
   const { condition, icon, description, sys } = weather;
