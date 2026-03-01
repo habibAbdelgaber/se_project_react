@@ -162,7 +162,7 @@ function App() {
   };
 
   if (loading) return <Spinner />;
-  if (error) return <APIError message={`Error fetching weather: ${error}`} />;
+  if (error) return <APIError errorText={`Error fetching weather: ${error}`} />;
 
   const userClothingItems = isLoggedIn && currentUser
     ? (clothingItems ?? []).filter(
