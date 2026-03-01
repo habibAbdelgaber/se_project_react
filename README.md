@@ -1,7 +1,7 @@
 # WTWR (What to Wear)
 
 ## Backend Repository
-[WTWR Backend](https://github.com/your-username/se_project_express)
+[WTWR Backend](https://github.com/habibAbdelgaber/se_project_express.git)
 
 ## Overview
 A React-based weather application that suggests clothing based on current weather conditions. Built with Vite, React 19, Redux Toolkit, and React Router. Includes user authentication with JWT tokens.
