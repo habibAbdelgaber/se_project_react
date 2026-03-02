@@ -1,6 +1,6 @@
 import { API_URL } from "./constants";
 import { getToken } from "./token";
-import checkResponse from "./http";
+import { request } from "./http";
 
 const getAuthHeaders = () => {
   const token = getToken();
@@ -9,10 +9,6 @@ const getAuthHeaders = () => {
     authorization: `Bearer ${token}`,
   };
 };
-
-function request(url, options) {
-  return fetch(url, options).then(checkResponse);
-}
 
 export const getItems = () => {
   return request(`${API_URL}/items`);

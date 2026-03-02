@@ -1,9 +1,5 @@
 import { BASE_URL, API_KEY, coordinates } from "./constants";
-import checkResponse from "./http";
-
-function request(url, options) {
-  return fetch(url, options).then(checkResponse);
-}
+import { request } from "./http";
 
 export const getWeather = () => {
   return request(

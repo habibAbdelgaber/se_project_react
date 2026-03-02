@@ -1,10 +1,6 @@
 import { API_URL } from "./constants";
 import { getToken } from "./token";
-import checkResponse from "./http";
-
-function request(url, options) {
-  return fetch(url, options).then(checkResponse);
-}
+import { request } from "./http";
 
 export const signup = ({ name, avatar, email, password }) => {
   return request(`${API_URL}/signup`, {
