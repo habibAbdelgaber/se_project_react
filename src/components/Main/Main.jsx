@@ -10,19 +10,19 @@ function Main({ weather, clothingItems, onDeleteRequest, closeItemModalTick, onC
   if (!weather) return null;
   const temp = weather.temperature?.[currentTemperatureUnit];
   return (
-    <div className="main">
+    <main className="main">
       <h2 className="main__title">
         Today is {temp}°{currentTemperatureUnit} in {weather.city}. You may want to wear:
       </h2>
       <WeatherCard weather={weather} />
       <ItemCard
-        temperature={temp}
+        temperature={weather.temperature?.F}
         clothingItems={clothingItems}
         onDeleteRequest={onDeleteRequest}
         closeItemModalTick={closeItemModalTick}
         onCardLike={onCardLike}
       />
-    </div>
+    </main>
   );
 }
 

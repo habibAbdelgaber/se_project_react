@@ -13,6 +13,7 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import { getWeather, extractWeatherData } from "../utils/weatherApi";
 import { getItems, addItem, deleteItem, addCardLike, removeCardLike } from "../utils/api";
+import { updateUserProfile } from "../utils/auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Spinner from "./Spinner/Spinner";
 
@@ -30,7 +31,7 @@ const placeholderClothingItems = [
 ];
 
 function App() {
-  const { currentUser, isLoggedIn, handleSignIn, handleSignUp } = useContext(CurrentUserContext);
+  const { currentUser, isLoggedIn, handleSignIn, handleSignUp, handleUpdateUser } = useContext(CurrentUserContext);
 
   const [formOpen, setFormOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
@@ -42,6 +43,22 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [closeItemModalTick, setCloseItemModalTick] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCloseModal = () => {
+    setFormOpen(false);
+    setSignUpOpen(false);
+    setSignInOpen(false);
+    setEditProfileOpen(false);
+  };
+
+  function handleSubmit(request) {
+    setIsLoading(true);
+    request()
+      .then(handleCloseModal)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }
 
   useEffect(() => {
     getWeather()
@@ -103,13 +120,12 @@ function App() {
   };
 
   const handleAddItemSubmit = (item) => {
-    addItem(item)
-      .then((saveItem) => {
-        setClothingItems((prev) => [saveItem, ...prev]);
-      })
-      .catch((err) => {
-        console.error("Failed creating new item:", err);
+    const makeRequest = () => {
+      return addItem(item).then((savedItem) => {
+        setClothingItems((prev) => [savedItem, ...prev]);
       });
+    };
+    handleSubmit(makeRequest);
   };
 
   const handleCardLike = ({ id, isLiked }) => {
@@ -138,15 +154,26 @@ function App() {
   };
 
   const handleSignUpSubmit = (data) => {
-    return handleSignUp(data).catch((err) => {
-      console.error("Sign up failed:", err);
-    });
+    const makeRequest = () => {
+      return handleSignUp(data);
+    };
+    handleSubmit(makeRequest);
   };
 
   const handleSignInSubmit = (data) => {
-    return handleSignIn(data).catch((err) => {
-      console.error("Sign in failed:", err);
-    });
+    const makeRequest = () => {
+      return handleSignIn(data);
+    };
+    handleSubmit(makeRequest);
+  };
+
+  const handleEditProfileSubmit = (data) => {
+    const makeRequest = () => {
+      return updateUserProfile(data).then((updated) => {
+        handleUpdateUser(updated);
+      });
+    };
+    handleSubmit(makeRequest);
   };
 
   const switchToSignIn = () => {
@@ -217,22 +244,27 @@ function App() {
         isOpen={formOpen}
         onClose={() => setFormOpen(false)}
         onAddItem={handleAddItemSubmit}
+        isLoading={isLoading}
       />
       <RegisterModal
         isOpen={signUpOpen}
         onClose={() => setSignUpOpen(false)}
         onSignUp={handleSignUpSubmit}
         onSwitchToSignIn={switchToSignIn}
+        isLoading={isLoading}
       />
       <LoginModal
         isOpen={signInOpen}
         onClose={() => setSignInOpen(false)}
         onSignIn={handleSignInSubmit}
         onSwitchToSignUp={switchToSignUp}
+        isLoading={isLoading}
       />
       <EditProfileModal
         isOpen={editProfileOpen}
         onClose={() => setEditProfileOpen(false)}
+        onEditProfile={handleEditProfileSubmit}
+        isLoading={isLoading}
       />
       <DeleteConfirmation
         isOpen={deleteOpen}

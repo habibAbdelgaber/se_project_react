@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import InputField from "../InputField/InputField";
 import useForm from "../../hooks/useForm";
-function AddItemModal({ isOpen, onAddItem, onClose }) {
+
+function AddItemModal({ isOpen, onAddItem, onClose, isLoading }) {
   const {
     values,
     errors,
@@ -17,9 +19,14 @@ function AddItemModal({ isOpen, onAddItem, onClose }) {
       imageUrl: vals.imageUrl.trim(),
       weather: vals.weather[0],
     });
-    reset();
-    onClose();
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      reset();
+    }
+  }, [isOpen]);
+
   const hasBasics =
     values.name.trim() &&
     values.imageUrl.trim() &&
@@ -31,16 +38,13 @@ function AddItemModal({ isOpen, onAddItem, onClose }) {
   return (
     <ModalWithForm
       isOpen={isOpen}
-      onClose={() => {
-        reset();
-        onClose();
-      }}
+      onClose={onClose}
       onSubmit={handleSubmit}
       title="Add item"
       name="item-form"
       size="medium"
       disabled={!isFormValid}
-      buttonText="Add item"
+      buttonText={isLoading ? "Saving..." : "Add item"}
     >
       <InputField
         label="Name"
@@ -85,7 +89,6 @@ function AddItemModal({ isOpen, onAddItem, onClose }) {
           onBlur={handleBlur}
         />
       ))}
-      {/* Show group error once */}
       {touched.weather && errors.weather && (
         <div className="input-error" role="alert">
           {errors.weather}

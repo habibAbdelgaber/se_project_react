@@ -1,10 +1,14 @@
 import { BASE_URL, API_KEY, coordinates } from "./constants";
 import checkResponse from "./http";
 
+function request(url, options) {
+  return fetch(url, options).then(checkResponse);
+}
+
 export const getWeather = () => {
-  return fetch(
+  return request(
     `${BASE_URL}weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=imperial&appid=${API_KEY}`
-  ).then(checkResponse);
+  );
 };
 
 export const extractWeatherData = (data) => {

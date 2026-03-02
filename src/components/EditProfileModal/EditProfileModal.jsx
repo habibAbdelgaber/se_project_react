@@ -3,10 +3,9 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import InputField from "../InputField/InputField";
 import useForm from "../../hooks/useForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { updateUserProfile } from "../../utils/auth";
 
-function EditProfileModal({ isOpen, onClose }) {
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+function EditProfileModal({ isOpen, onClose, onEditProfile, isLoading }) {
+  const { currentUser } = useContext(CurrentUserContext);
 
   const {
     values,
@@ -20,17 +19,10 @@ function EditProfileModal({ isOpen, onClose }) {
   } = useForm(
     { name: currentUser?.name || "", avatar: currentUser?.avatar || "" },
     (vals) => {
-      updateUserProfile({
+      onEditProfile({
         name: vals.name.trim(),
         avatar: vals.avatar.trim(),
-      })
-        .then((updated) => {
-          handleUpdateUser(updated);
-          onClose();
-        })
-        .catch((err) => {
-          console.error("Failed to update profile:", err);
-        });
+      });
     }
   );
 
@@ -55,7 +47,7 @@ function EditProfileModal({ isOpen, onClose }) {
       name="edit-profile-form"
       size="medium"
       disabled={!isFormValid}
-      buttonText="Save changes"
+      buttonText={isLoading ? "Saving..." : "Save changes"}
     >
       <InputField
         label="Name"

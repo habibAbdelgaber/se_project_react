@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import InputField from "../InputField/InputField";
 import useForm from "../../hooks/useForm";
 
-function RegisterModal({ isOpen, onClose, onSignUp, onSwitchToSignIn }) {
+function RegisterModal({ isOpen, onClose, onSignUp, onSwitchToSignIn, isLoading }) {
   const {
     values,
     errors,
@@ -18,15 +19,14 @@ function RegisterModal({ isOpen, onClose, onSignUp, onSwitchToSignIn }) {
       avatar: vals.avatar.trim(),
       email: vals.email.trim(),
       password: vals.password,
-    })
-      .then(() => {
-        reset();
-        onClose();
-      })
-      .catch((err) => {
-        console.error("Sign up failed:", err);
-      });
+    });
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      reset();
+    }
+  }, [isOpen]);
 
   const hasBasics =
     values.name.trim() &&
@@ -38,16 +38,13 @@ function RegisterModal({ isOpen, onClose, onSignUp, onSwitchToSignIn }) {
   return (
     <ModalWithForm
       isOpen={isOpen}
-      onClose={() => {
-        reset();
-        onClose();
-      }}
+      onClose={onClose}
       onSubmit={handleSubmit}
       title="Sign Up"
       name="signup-form"
       size="medium"
       disabled={!isFormValid}
-      buttonText="Sign Up"
+      buttonText={isLoading ? "Signing up..." : "Sign Up"}
     >
       <InputField
         label="Email"

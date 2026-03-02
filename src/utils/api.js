@@ -10,35 +10,39 @@ const getAuthHeaders = () => {
   };
 };
 
+function request(url, options) {
+  return fetch(url, options).then(checkResponse);
+}
+
 export const getItems = () => {
-  return fetch(`${API_URL}/items`).then(checkResponse);
+  return request(`${API_URL}/items`);
 };
 
 export const addItem = (item) => {
-  return fetch(`${API_URL}/items`, {
+  return request(`${API_URL}/items`, {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(item),
-  }).then(checkResponse);
+  });
 };
 
 export const deleteItem = (itemId) => {
-  return fetch(`${API_URL}/items/${itemId}`, {
+  return request(`${API_URL}/items/${itemId}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
-  }).then(checkResponse);
+  });
 };
 
 export const addCardLike = (itemId) => {
-  return fetch(`${API_URL}/items/${itemId}/likes`, {
+  return request(`${API_URL}/items/${itemId}/likes`, {
     method: "PUT",
     headers: getAuthHeaders(),
-  }).then(checkResponse);
+  });
 };
 
 export const removeCardLike = (itemId) => {
-  return fetch(`${API_URL}/items/${itemId}/likes`, {
+  return request(`${API_URL}/items/${itemId}/likes`, {
     method: "DELETE",
     headers: getAuthHeaders(),
-  }).then(checkResponse);
+  });
 };
