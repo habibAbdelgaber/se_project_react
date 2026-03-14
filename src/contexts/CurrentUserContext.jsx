@@ -43,12 +43,6 @@ export function CurrentUserProvider({ children }) {
 
   const handleSignUp = async ({ name, avatar, email, password }) => {
     await signup({ name, avatar, email, password });
-    const data = await signin({ email, password });
-    setToken(data.token);
-    const user = await getUserProfile();
-    setCurrentUser(user);
-    setIsLoggedIn(true);
-    return user;
   };
 
   const handleSignOut = () => {

@@ -154,10 +154,14 @@ function App() {
   };
 
   const handleSignUpSubmit = (data) => {
-    const makeRequest = () => {
-      return handleSignUp(data);
-    };
-    handleSubmit(makeRequest);
+    setIsLoading(true);
+    handleSignUp(data)
+      .then(() => {
+        setSignUpOpen(false);
+        setSignInOpen(true);
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   };
 
   const handleSignInSubmit = (data) => {

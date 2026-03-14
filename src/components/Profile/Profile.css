@@ -63,6 +63,7 @@
 
 .profile__add-text {
   display: block;
+  color: inherit;
 }
 
 @media screen and (max-width: 768px) {
