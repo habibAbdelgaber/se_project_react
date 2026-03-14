@@ -45,3 +45,8 @@ externalPort = 3003
 deploymentTarget = "static"
 build = ["npm", "run", "build"]
 publicDir = "dist"
+
+[userenv]
+
+[userenv.shared]
+VITE_API_URL = "https://api.wtwr.pymastery.com"
