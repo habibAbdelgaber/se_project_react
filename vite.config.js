@@ -7,7 +7,11 @@ export default defineConfig({
   base: "/",
   server: {
     port: 5000,
+    strictPort: true,
     host: "0.0.0.0",
     allowedHosts: true,
+    watch: {
+      ignored: ["**/.local/**", "**/node_modules/**"],
+    },
   },
 });
